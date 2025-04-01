@@ -42,3 +42,4 @@ for athlete in res:
     if "Michael Fred Phelp" in athlete[1]:
         m.append(athlete)
 print(m)
+# hahaha c'est le bon

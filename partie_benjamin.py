@@ -50,3 +50,8 @@ for athlete in res:
         ):
             m.append(athlete)
 print(len(m))
+
+
+##############################
+
+# question 2:

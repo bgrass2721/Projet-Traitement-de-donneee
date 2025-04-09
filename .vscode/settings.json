@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "donnees_jeux_olympiques"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

@@ -7,7 +7,9 @@ import csv
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
 )
-noc = pd.read_csv("donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv")
+noc = pd.read_csv(
+    "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
+    )
 
 # Afficher les premières lignes du fichier
 # print(athlete.head(), noc.head())

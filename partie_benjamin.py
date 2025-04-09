@@ -54,4 +54,10 @@ print(len(m))
 
 ##############################
 
-# question 2:
+# question 2: quelles sont les caractéristiques physiques +age qui remportent le plus de
+# médailles
+
+
+##############################
+
+# question 3: Classement des JO toutes années confondues

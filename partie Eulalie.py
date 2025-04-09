@@ -41,17 +41,39 @@ with open(
     for line in file:
         res.append(line)
 
-medal = [[], []]
+nom = []
+medal = []
+
 for athlete in res:
     if ("Bronze" in athlete[-1]):
-        if athlete in medal[1]: 
-            n = medal.index(athlete)
-            medal[athlete][n] += 1
+        if athlete[1] in nom:
+            n = nom.index(athlete[1])  # indice du nom
+            medal[n] += 1  # on rajoute 1 à l'indice du nom
         else:
-            medal.append[athlete]
-            
+            nom.append(athlete[1])
+            medal.append(1)
+    if ("Silver" in athlete[-1]):
+        if athlete[1] in nom:
+            n = nom.index(athlete[1])
+            medal[n] += 2
+        else:
+            nom.append(athlete[1])
+            medal.append(2)
+    if ("Gold" in athlete[-1]):
+        if athlete[1] in nom:
+            n = nom.index(athlete[1])
+            medal[n] += 3
+        else:
+            nom.append(athlete[1])
+            medal.append(3)
+    liste_med = [nom, medal]
 
-print(medal)
+
+joueur_plus_med = []
+for i in range(len(medal)):
+    joueur_plus_med.append([nom[i], medal[i]])
+
+classement = sorted(joueur_plus_med, key=lambda x: x[1])
 # prénom dans liste rajouter point 1 pt bronze , 2 argent et 3 or
 
 # Question 4: Des disciplines ont-elles disparu au fil des ans? Si oui, lesquelles?

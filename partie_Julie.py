@@ -121,11 +121,33 @@ for noc in country:
 '''
 
 pays = []
-annees_paricipation = []
+
+
+def annees_participation(noc):
+    nb_annees = 0
+    doublons = []
+    for annee in res[9]:
+        if annee not in doublons:
+            if noc == res[7]:
+                nb_annees += 1
+                doublons.append(annee)
+    return nb_annees
+
+
+def total_medailles(noc):
+    nb_medailles = 0
+    doublons = []
+    for (discipline, medaille, annee) in (res[-2], res[-1], res[9]):
+        if noc == res[7]:
+            if (discipline, medaille, annee) not in doublons:
+                nb_medailles += 1
+                doublons.append((discipline, medaille, annee))
+    return nb_medailles
+
 
 moyenne_medaille_pays = []
 for ligne in country:
-    moyenne = somme / len(annees_participation)
+    moyenne = total_medailles(ligne[0]) / annees_participation(ligne[0])
     moyenne_medaille_pays.append([ligne[0], ligne[1], moyenne])
 
-print(pays)
+print(moyenne_medaille_pays)

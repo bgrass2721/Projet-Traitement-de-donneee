@@ -26,12 +26,20 @@ with open(os.path.join(
 # Le nombre de femmes parmi les participants par année.
 
 athlete_femme = athlete[athlete["Sex"] == "F"]
-nb_femme_an = athlete_femme.groupby("Year")["Sex"].value_counts().groupby("Year").sum()
+# nb_femme_an = athlete_femme.groupby("Year")["Sex"].value_counts().groupby("Year").sum()
+
+nb_femme_an = athlete_femme.groupby("Year")["Name"].value_counts().groupby("Year").sum()
+nb_athlete_an = athlete.groupby("Year")["Name"].value_counts().groupby("Year").sum()
+
+print("Nombre de participants par année :", nb_athlete_an)
 
 print("Nombre de femmes parmi les participants par année : ", nb_femme_an)
 
-proportion_femme_an = nb_femme_an.apply[]()
 
+proportion_femme_an = nb_femme_an.div(nb_athlete_an)
+print("Proportion de femmes par année :", proportion_femme_an)
+
+'''
 # La moyenne des médailles remportées par les athlètes du Royaume-Uni.
 
 athlete_UK = athlete[athlete["NOC"] == "GBR"]
@@ -42,7 +50,6 @@ medailles_UK_ete = athlete_UK_ete.groupby("Year")["Medal"].value_counts().groupb
 print("Médailles du Royaume-Uni : ", medailles_UK_ete)
 print("Moyenne des médailles du Royaume-Uni : ", medailles_UK_ete.mean())
 
-
-
 # Combien de médailles les pays participants ont-ils gagné en moyenne par JO ?
 
+'''

@@ -85,3 +85,59 @@ nb_personnes = age_mode.max()
 ##############################
 
 # question 3: Classement des JO toutes années confondues
+
+# classement = pd.DataFrame({"NOC": noc["NOC"], "Score": 0})
+# print(classement)
+
+
+def ajouter_points_si_condition(df, df_score):
+    for i, ligne in df.iterrows():
+        if ligne["Medal"] == "Bronze":
+            df_score.loc[df_score["NOC"] == ligne["NOC"], "Score"] += 1
+        if ligne["Medal"] == "Silver":
+            df_score.loc[df_score["NOC"] == ligne["NOC"], "Score"] += 2
+        if ligne["Medal"] == "Gold":
+            df_score.loc[df_score["NOC"] == ligne["NOC"], "Score"] += 3
+
+
+# ajouter_points_si_condition(athlete, classement)
+# classement_gen = classement.sort_values(by="Score", ascending=False)
+# classement_gen = classement_gen.reset_index(drop=True)
+# print(classement_gen)
+
+import numpy as np
+
+# Création du DataFrame de classement initial
+classement = pd.DataFrame({"NOC": noc["NOC"], "Score": 0})
+
+# Ajouter des points en fonction de la médaille dans athlete
+athlete["Points"] = np.select(
+    [
+        athlete["Medal"] == "Bronze",
+        athlete["Medal"] == "Silver",
+        athlete["Medal"] == "Gold",
+    ],
+    [1, 2, 3],
+    default=0,
+)
+
+# Agréger les points par NOC dans athlete
+athlete_points = athlete.groupby("NOC")["Points"].sum().reset_index()
+
+# Fusionner les DataFrames avec les scores agrégés
+classement = classement.merge(athlete_points, on="NOC", how="left")
+
+# Ajouter les points au classement
+classement["Score"] += classement["Points"].fillna(0).astype(int)
+
+# Trier le classement par score en ordre décroissant et réinitialiser l'index
+classement_gen = classement.sort_values(by="Score", ascending=False).reset_index(
+    drop=True
+)
+classement_gen.index = classement_gen.index + 1  # Ajuster pour commencer à 1
+classement_fin = classement_gen[["NOC", "Score"]]
+
+# Afficher le classement final
+# print(classement_fin)
+# Exporter le DataFrame vers un fichier CSV
+classement_fin.to_csv("classement_final.csv", index=False)

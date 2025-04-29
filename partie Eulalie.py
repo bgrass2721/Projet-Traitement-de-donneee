@@ -1,7 +1,6 @@
 import pandas as pd
 import csv
 import os
-import matplotlib.pyplot as plt
 
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
@@ -32,33 +31,44 @@ regroup_max = (
 nb_min = regroup_min.sum()
 
 
-
-nb_min.plot(x="region", y=["Médailles_min", "Médailles_max"], kind="bar", figsize=(12, 6))
-plt.title("Médailles par pays (bornes inf. et sup.) - JO 2016")
-plt.ylabel("Nombre de médailles")
-plt.xticks(rotation=90)
-plt.tight_layout()
-plt.show()
 # nombre minimum
 nb_max = regroup_max.sum()
 
+
+##############################
+
 # Question 2: Le nombre de disc accessibles aux femmes et aux hommes équivalent?
-# Si oui, depuis quand le sont-ils devenus?
-evenement = athlete[["Year", "Sex", "Event"]]
-disc_annee_hf = evenement.groupby(["Year", "Sex"])
-# regroupe par année et par sexe
+# Si oui, depuis quand l'est-il devenu?
+# on sépare les disciplines hiver et été, pour avoir une estimation plus précise
+dis_ete = athlete[athlete["Season"] == "Summer"]
+dis_hiv = athlete[athlete["Season"] == "Winter"]
 
-disc_triees = disc_annee_hf["Event"].nunique()
+# on ne garde que les colonnes utiles
+evenement_ete = dis_ete[["Year", "Sex", "Event"]]
+evenement_hiv = dis_hiv[["Year", "Sex", "Event"]]
+
+
+# on regroupe en fonction de l'année et du sexe
+disc_annee_hf_ete = evenement_ete.groupby(["Year", "Sex"])
+disc_annee_hf_hiv = evenement_hiv.groupby(["Year", "Sex"])
+
+# on compte le nombre de disciplines 
+disc_triees_ete = disc_annee_hf_ete["Event"].nunique()
+disc_triees_hiv = disc_annee_hf_hiv["Event"].nunique()
 # ici, value_count n'aurait pas fonctionné: compte le nb d'oc d'une modalité
+print(disc_triees_ete)
+print(disc_triees_hiv)
 
+
+##############################
 
 
 # Question 3: Des disciplines ont-elles disparu au fil des ans ? Lesquelles ?
-d_ann = athlete[["Year", "Event"]]
+d_ann = athlete[["Year", "Event", "Season"]]
 
 # séparation des disciplines par saison
-dis_an_ete = d_ann[d_ann["Year"] % 4 == 0]
-dis_an_hiv = d_ann[d_ann["Year"] % 4 != 0]
+dis_an_ete = d_ann[d_ann["Season"] == "Summer"]
+dis_an_hiv = d_ann[d_ann["Season"] == "Winter"]
 
 # sélection de données que l'on veut comparer
 c_ete = dis_an_ete[(dis_an_ete["Year"] == 2016) | (dis_an_ete["Year"] == 2012)]
@@ -66,10 +76,22 @@ c_hiv = dis_an_hiv[(dis_an_hiv["Year"] == 2014) | (dis_an_hiv["Year"] == 2010)]
 
 # discplines qui existent aujourd'hui:
 dis_ete_a = c_ete[["Event"]].drop_duplicates()
+dis_hiv_a = c_hiv[["Event"]].drop_duplicates()
 
 # comparaison:
-dis_tot = athlete[["Event"]].drop_duplicates()
-anciennes_dis = dis_tot[~dis_tot["Event"].isin(dis_ete_a["Event"])]
+# on enlève les doublons des disciplines totales et on compare
+dis_tot_ete = dis_an_ete[["Event"]].drop_duplicates()
+anciennes_dis_ete = dis_tot_ete[~dis_tot_ete["Event"].isin(dis_ete_a["Event"])]
+
+dis_tot_hiv = dis_an_hiv[["Event"]].drop_duplicates()
+anciennes_dis_hiv = dis_tot_hiv[~dis_tot_hiv["Event"].isin(dis_hiv_a["Event"])]
+
+
+anciennes_dis_hiv.to_csv("anciennes_dis_hiv.csv", index=False)
+anciennes_dis_ete.to_csv("anciennes_dis_ete.csv", index=False)
+
+
+##############################
 
 # Question 4 en python: Classement des Athletes JO ?
 res = []

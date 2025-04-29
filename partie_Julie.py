@@ -121,20 +121,19 @@ def annees_participation(noc):
     nb_annees = 0
     doublons = []  # Liste des années de participation d'un pays.
     for i in range(1, len(res)):
+        if noc == res[i][7]:
         # if isinstance(res[i][3], int):
-            if res[i][9] not in doublons:
-                if noc == res[i][7]:
-                    print("True")
+            if res[i][8] not in doublons:
+                    # print("True")
                     nb_annees += 1
-                    doublons.append(res[i][9])
+                    doublons.append(res[i][8])
                 # else:
                     # print("False", res[i][7])
     print(doublons)
     return nb_annees
 
 
-print(annees_participation("FRA"))
-print(len(res))
+print(annees_participation("USA"))
 
 
 [ligne.pop(14) for ligne in res]

@@ -2,44 +2,73 @@ import pandas as pd
 import csv
 import os
 
-
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
 )
+pays = pd.read_csv(
+    "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
+    )
+
 # Question 1:
 # min et max de chaque pays
 # ne garde que les athlètes de 2016
 athlete_2016 = athlete[athlete["Year"] == 2016]
+athlete_2016_pays = athlete_2016.merge(pays, on="NOC", how="left")
 
 # supprimer les doubles: quand l'épreuve est par équipe
-athletes_medailles = athlete_2016[["Medal", "NOC", "Event"]]
-athletes_medailles = athletes_medailles.drop_duplicates()
+athletes_medailles = athlete_2016_pays[["Medal", "region", "Event"]]
+athletes_medailles_min = athletes_medailles.drop_duplicates()
 
 # compte le nombre de médailles par pays
-regroup = (
-    athletes_medailles.groupby("NOC")["Medal"].value_counts().groupby("NOC")
+regroup_min = (
+    athletes_medailles_min.groupby("region")["Medal"].value_counts().groupby("region")
     )
 
-# max des médailles remportées
-nb_max = max(regroup.sum())
+regroup_max = (
+    athletes_medailles.groupby("region")["Medal"].value_counts().groupby("region")
+    )
+# borne inférieure des médailles remportées JO 2016
+nb_min = regroup_min.sum()
+
 
 # nombre minimum
-nb_min = min(regroup.sum())
+nb_max = regroup_max.sum()
 
-# Question 2: Le nombre de disc accesibles aux femmes et aux hommes équivalent?
-# Si oui, depuis quand le sont-ils devenus?
-evenement = athlete[["Year", "Sex", "Event"]]
-disc_annee_hf = evenement.groupby(["Year", "Sex"])
-# regroupe par année et par sexe
 
-disc_triees = disc_annee_hf["Event"].nunique()
+##############################
+
+# Question 2: Le nombre de disc accessibles aux femmes et aux hommes équivalent?
+# Si oui, depuis quand l'est-il devenu?
+# on sépare les disciplines hiver et été, pour avoir une estimation plus précise
+dis_ete = athlete[athlete["Season"] == "Summer"]
+dis_hiv = athlete[athlete["Season"] == "Winter"]
+
+# on ne garde que les colonnes utiles
+evenement_ete = dis_ete[["Year", "Sex", "Event"]]
+evenement_hiv = dis_hiv[["Year", "Sex", "Event"]]
+
+
+# on regroupe en fonction de l'année et du sexe
+disc_annee_hf_ete = evenement_ete.groupby(["Year", "Sex"])
+disc_annee_hf_hiv = evenement_hiv.groupby(["Year", "Sex"])
+
+# on compte le nombre de disciplines 
+disc_triees_ete = disc_annee_hf_ete["Event"].nunique()
+disc_triees_hiv = disc_annee_hf_hiv["Event"].nunique()
 # ici, value_count n'aurait pas fonctionné: compte le nb d'oc d'une modalité
+print(disc_triees_ete)
+print(disc_triees_hiv)
+
+
+##############################
+
+
 # Question 3: Des disciplines ont-elles disparu au fil des ans ? Lesquelles ?
-d_ann = athlete[["Year", "Event"]]
+d_ann = athlete[["Year", "Event", "Season"]]
 
 # séparation des disciplines par saison
-dis_an_ete = d_ann[d_ann["Year"] % 4 == 0]
-dis_an_hiv = d_ann[d_ann["Year"] % 4 != 0]
+dis_an_ete = d_ann[d_ann["Season"] == "Summer"]
+dis_an_hiv = d_ann[d_ann["Season"] == "Winter"]
 
 # sélection de données que l'on veut comparer
 c_ete = dis_an_ete[(dis_an_ete["Year"] == 2016) | (dis_an_ete["Year"] == 2012)]
@@ -47,11 +76,22 @@ c_hiv = dis_an_hiv[(dis_an_hiv["Year"] == 2014) | (dis_an_hiv["Year"] == 2010)]
 
 # discplines qui existent aujourd'hui:
 dis_ete_a = c_ete[["Event"]].drop_duplicates()
+dis_hiv_a = c_hiv[["Event"]].drop_duplicates()
 
 # comparaison:
-dis_tot = athlete[["Event"]].drop_duplicates()
-anciennes_dis = dis_tot[~dis_tot["Event"].isin(dis_ete_a["Event"])]
-print(anciennes_dis)
+# on enlève les doublons des disciplines totales et on compare
+dis_tot_ete = dis_an_ete[["Event"]].drop_duplicates()
+anciennes_dis_ete = dis_tot_ete[~dis_tot_ete["Event"].isin(dis_ete_a["Event"])]
+
+dis_tot_hiv = dis_an_hiv[["Event"]].drop_duplicates()
+anciennes_dis_hiv = dis_tot_hiv[~dis_tot_hiv["Event"].isin(dis_hiv_a["Event"])]
+
+
+anciennes_dis_hiv.to_csv("anciennes_dis_hiv.csv", index=False)
+anciennes_dis_ete.to_csv("anciennes_dis_ete.csv", index=False)
+
+
+##############################
 
 # Question 4 en python: Classement des Athletes JO ?
 res = []
@@ -65,7 +105,7 @@ with open(
     for line in file:
         res.append(line)
 
-# création d'une liste de liste contenatn le nombre de victoires associé au nom
+# création d'une liste de liste contenant le nombre de victoires associé au nom
 nom = []
 medal = []
 

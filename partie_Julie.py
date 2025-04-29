@@ -88,19 +88,7 @@ print("Moyenne des médailles des Etats-Unis : ", medailles_US_ete.mean())
 
 
 
-# Combien de médailles les pays participants ont-ils gagné en moyenne par JO ?
-
-
-[ligne.pop(14) for ligne in res]
-[ligne.pop(12) for ligne in res]
-[ligne.pop(11) for ligne in res]
-[ligne.pop(8) for ligne in res]
-[ligne.pop(6) for ligne in res]
-[ligne.pop(5) for ligne in res]
-[ligne.pop(4) for ligne in res]
-[ligne.pop(3) for ligne in res]
-[ligne.pop(2) for ligne in res]
-[ligne.pop(1) for ligne in res]
+# Combien de médaillés les pays participants ont-ils compté en moyenne par JO ?
 
 medailles = []
 for athlete in res:
@@ -120,20 +108,46 @@ for noc in country:
             medailles_pays.append()
 '''
 
+
+# [print(res[i][2]) for i in range(1, len(res))]
+print(type(country[1][0]))
+
 pays = []
 
 
 def annees_participation(noc):
+    """Donne le nombre d'années de participation d'un pays aux JO.
+    """
     nb_annees = 0
-    doublons = []
-    for annee in res[9]:
-        if annee not in doublons:
-            if noc == res[7]:
-                nb_annees += 1
-                doublons.append(annee)
+    doublons = []  # Liste des années de participation d'un pays.
+    for i in range(1, len(res)):
+        if noc == res[i][7]:
+        # if isinstance(res[i][3], int):
+            if res[i][8] not in doublons:
+                    # print("True")
+                    nb_annees += 1
+                    doublons.append(res[i][8])
+                # else:
+                    # print("False", res[i][7])
+    print(doublons)
     return nb_annees
 
 
+print(annees_participation("USA"))
+
+
+[ligne.pop(14) for ligne in res]
+[ligne.pop(12) for ligne in res]
+[ligne.pop(11) for ligne in res]
+[ligne.pop(8) for ligne in res]
+[ligne.pop(6) for ligne in res]
+[ligne.pop(5) for ligne in res]
+[ligne.pop(4) for ligne in res]
+[ligne.pop(3) for ligne in res]
+[ligne.pop(2) for ligne in res]
+
+
+'''
 def total_medailles(noc):
     nb_medailles = 0
     doublons = []
@@ -151,3 +165,4 @@ for ligne in country:
     moyenne_medaille_pays.append([ligne[0], ligne[1], moyenne])
 
 print(moyenne_medaille_pays)
+'''

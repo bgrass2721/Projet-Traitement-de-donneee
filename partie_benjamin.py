@@ -2,6 +2,7 @@
 import pandas as pd
 import os
 import csv
+import numpy as np
 
 # Charger un fichier CSV
 athlete = pd.read_csv(
@@ -104,8 +105,6 @@ def ajouter_points_si_condition(df, df_score):
 # classement_gen = classement.sort_values(by="Score", ascending=False)
 # classement_gen = classement_gen.reset_index(drop=True)
 # print(classement_gen)
-
-import numpy as np
 
 # Création du DataFrame de classement initial
 classement = pd.DataFrame({"NOC": noc["NOC"], "Score": 0})

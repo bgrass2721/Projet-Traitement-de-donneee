@@ -1,32 +1,48 @@
 import pandas as pd
 import csv
 import os
-
+import matplotlib.pyplot as plt
 
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
 )
+pays = pd.read_csv(
+    "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
+    )
+
 # Question 1:
 # min et max de chaque pays
 # ne garde que les athlètes de 2016
 athlete_2016 = athlete[athlete["Year"] == 2016]
+athlete_2016_pays = athlete_2016.merge(pays, on="NOC", how="left")
 
 # supprimer les doubles: quand l'épreuve est par équipe
-athletes_medailles = athlete_2016[["Medal", "NOC", "Event"]]
-athletes_medailles = athletes_medailles.drop_duplicates()
+athletes_medailles = athlete_2016_pays[["Medal", "region", "Event"]]
+athletes_medailles_min = athletes_medailles.drop_duplicates()
 
 # compte le nombre de médailles par pays
-regroup = (
-    athletes_medailles.groupby("NOC")["Medal"].value_counts().groupby("NOC")
+regroup_min = (
+    athletes_medailles_min.groupby("region")["Medal"].value_counts().groupby("region")
     )
 
-# max des médailles remportées
-nb_max = max(regroup.sum())
+regroup_max = (
+    athletes_medailles.groupby("region")["Medal"].value_counts().groupby("region")
+    )
+# borne inférieure des médailles remportées JO 2016
+nb_min = regroup_min.sum()
 
+
+
+nb_min.plot(x="region", y=["Médailles_min", "Médailles_max"], kind="bar", figsize=(12, 6))
+plt.title("Médailles par pays (bornes inf. et sup.) - JO 2016")
+plt.ylabel("Nombre de médailles")
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
 # nombre minimum
-nb_min = min(regroup.sum())
+nb_max = regroup_max.sum()
 
-# Question 2: Le nombre de disc accesibles aux femmes et aux hommes équivalent?
+# Question 2: Le nombre de disc accessibles aux femmes et aux hommes équivalent?
 # Si oui, depuis quand le sont-ils devenus?
 evenement = athlete[["Year", "Sex", "Event"]]
 disc_annee_hf = evenement.groupby(["Year", "Sex"])
@@ -34,6 +50,9 @@ disc_annee_hf = evenement.groupby(["Year", "Sex"])
 
 disc_triees = disc_annee_hf["Event"].nunique()
 # ici, value_count n'aurait pas fonctionné: compte le nb d'oc d'une modalité
+
+
+
 # Question 3: Des disciplines ont-elles disparu au fil des ans ? Lesquelles ?
 d_ann = athlete[["Year", "Event"]]
 
@@ -51,7 +70,6 @@ dis_ete_a = c_ete[["Event"]].drop_duplicates()
 # comparaison:
 dis_tot = athlete[["Event"]].drop_duplicates()
 anciennes_dis = dis_tot[~dis_tot["Event"].isin(dis_ete_a["Event"])]
-print(anciennes_dis)
 
 # Question 4 en python: Classement des Athletes JO ?
 res = []
@@ -65,7 +83,7 @@ with open(
     for line in file:
         res.append(line)
 
-# création d'une liste de liste contenatn le nombre de victoires associé au nom
+# création d'une liste de liste contenant le nombre de victoires associé au nom
 nom = []
 medal = []
 

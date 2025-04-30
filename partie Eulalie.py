@@ -1,6 +1,8 @@
 import pandas as pd
 import csv
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
@@ -43,7 +45,8 @@ nb_max = regroup_max.sum()
 dis_ete = athlete[athlete["Season"] == "Summer"]
 dis_hiv = athlete[athlete["Season"] == "Winter"]
 
-# on ne garde que les colonnes utiles
+
+# on ne garde que les colonnes utiles pour puvoir faire dess group_by
 evenement_ete = dis_ete[["Year", "Sex", "Event"]]
 evenement_hiv = dis_hiv[["Year", "Sex", "Event"]]
 
@@ -51,14 +54,64 @@ evenement_hiv = dis_hiv[["Year", "Sex", "Event"]]
 # on regroupe en fonction de l'année et du sexe
 disc_annee_hf_ete = evenement_ete.groupby(["Year", "Sex"])
 disc_annee_hf_hiv = evenement_hiv.groupby(["Year", "Sex"])
+disc_annee_ete = evenement_ete.groupby(["Year"])
+disc_annee_hiv = evenement_hiv.groupby(["Year"])
 
-# on compte le nombre de disciplines 
+# on compte le nombre de disciplines
 disc_triees_ete = disc_annee_hf_ete["Event"].nunique()
 disc_triees_hiv = disc_annee_hf_hiv["Event"].nunique()
-# ici, value_count n'aurait pas fonctionné: compte le nb d'oc d'une modalité
-print(disc_triees_ete)
-print(disc_triees_hiv)
 
+# en ne comptant qu'une fois les disciplines mixtes
+disc_tot_ete = disc_annee_ete["Event"].nunique()
+disc_tot_hiv = disc_annee_hiv["Event"].nunique()
+
+# ici, value_count n'aurait pas fonctionné: compte le nb d'oc d'une modalité
+
+# problème: si on convertit en dataframe, le Year et le Sexe disparaissent, ce ne sont plus des colonnes
+# en fait, le group_by a transformé en index ces colonnes, donc il faut réinitialiser l'index
+
+disc_table_ete = disc_triees_ete.reset_index(name='Nb_disciplines_ete')
+disc_table_hiv = disc_triees_hiv.reset_index(name='Nb_disciplines_hiv')
+disc_table_ete_tot = disc_tot_ete.reset_index(name='Nb_disciplines_ete')
+disc_table_hiv_tot = disc_tot_hiv.reset_index(name='Nb_disciplines_hiv')
+
+# pour faire pourcentage ensuite
+disc_table_ete_f = disc_table_ete[disc_table_ete["Sex"] == "F"]
+disc_table_hiv_f = disc_table_hiv[disc_table_hiv["Sex"] == "F"]
+
+# calcul du pourcentage pour été
+disc_table_merged_ete = pd.merge(
+    disc_table_ete_f[["Year", "Nb_disciplines_ete"]].rename(columns={"Nb_disciplines_ete": "Nb_disc_f"}),
+    disc_table_ete_tot[["Year", "Nb_disciplines_ete"]].rename(columns={"Nb_disciplines_ete": "Nb_disc_tot"}),
+    on="Year"
+)
+
+disc_table_merged_ete["Pct_f"] = disc_table_merged_ete["Nb_disc_f"] / (
+    disc_table_merged_ete["Nb_disc_tot"]
+) * 100
+# création du graphique pour été
+sns.lineplot(data=disc_table_merged_ete, x="Year", y="Pct_f")
+plt.title("Pourcentage de disciplines féminines aux JO d'été")
+plt.ylabel("Pourcentage de disciplines féminines (%)")
+plt.show()
+
+
+# calcul du pourcentage pour hiver
+disc_table_merged_hiv = pd.merge(
+    disc_table_hiv_f[["Year", "Nb_disciplines_hiv"]].rename(columns={"Nb_disciplines_hiv": "Nb_disc_f"}),
+    disc_table_hiv_tot[["Year", "Nb_disciplines_hiv"]].rename(columns={"Nb_disciplines_hiv": "Nb_disc_tot"}),
+    on="Year"
+)
+
+disc_table_merged_hiv["Pct_f"] = disc_table_merged_hiv["Nb_disc_f"] / (
+    disc_table_merged_hiv["Nb_disc_tot"]
+) * 100
+
+# création du graphique pour hiver
+sns.lineplot(data=disc_table_merged_hiv, x="Year", y="Pct_f")
+plt.title("Pourcentage de disciplines féminines aux JO d'hiver")
+plt.ylabel("Pourcentage de disciplines féminines (%)")
+plt.show()
 
 ##############################
 

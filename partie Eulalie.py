@@ -67,13 +67,15 @@ disc_tot_hiv = disc_annee_hiv["Event"].nunique()
 
 # ici, value_count n'aurait pas fonctionné: compte le nb d'oc d'une modalité
 
-# problème: si on convertit en dataframe, le Year et le Sexe disparaissent, ce ne sont plus des colonnes
-# en fait, le group_by a transformé en index ces colonnes, donc il faut réinitialiser l'index
+# problème: si on convertit en dataframe, le Year et le Sexe disparaissent
+# ce ne sont plus des colonnes
+# en fait, le group_by a transformé en index ces colonnes,
+# donc il faut réinitialiser l'index
 
-disc_table_ete = disc_triees_ete.reset_index(name='Nb_disciplines_ete')
-disc_table_hiv = disc_triees_hiv.reset_index(name='Nb_disciplines_hiv')
-disc_table_ete_tot = disc_tot_ete.reset_index(name='Nb_disciplines_ete')
-disc_table_hiv_tot = disc_tot_hiv.reset_index(name='Nb_disciplines_hiv')
+disc_table_ete = disc_triees_ete.reset_index(name='Nb_disc_f')
+disc_table_hiv = disc_triees_hiv.reset_index(name='Nb_disc_f')
+disc_table_ete_tot = disc_tot_ete.reset_index(name='Nb_disc_tot')
+disc_table_hiv_tot = disc_tot_hiv.reset_index(name='Nb_disc_tot')
 
 # pour faire pourcentage ensuite
 disc_table_ete_f = disc_table_ete[disc_table_ete["Sex"] == "F"]
@@ -81,8 +83,8 @@ disc_table_hiv_f = disc_table_hiv[disc_table_hiv["Sex"] == "F"]
 
 # calcul du pourcentage pour été
 disc_table_merged_ete = pd.merge(
-    disc_table_ete_f[["Year", "Nb_disciplines_ete"]].rename(columns={"Nb_disciplines_ete": "Nb_disc_f"}),
-    disc_table_ete_tot[["Year", "Nb_disciplines_ete"]].rename(columns={"Nb_disciplines_ete": "Nb_disc_tot"}),
+    disc_table_ete_f[["Year", "Nb_disc_f"]],
+    disc_table_ete_tot[["Year", "Nb_disc_tot"]],
     on="Year"
 )
 
@@ -90,16 +92,18 @@ disc_table_merged_ete["Pct_f"] = disc_table_merged_ete["Nb_disc_f"] / (
     disc_table_merged_ete["Nb_disc_tot"]
 ) * 100
 # création du graphique pour été
-sns.lineplot(data=disc_table_merged_ete, x="Year", y="Pct_f")
+sns.barplot(data=disc_table_merged_ete, x="Year", y="Pct_f", color="skyblue")
 plt.title("Pourcentage de disciplines féminines aux JO d'été")
 plt.ylabel("Pourcentage de disciplines féminines (%)")
+plt.xticks(rotation=45)
+plt.tight_layout()
 plt.show()
 
 
 # calcul du pourcentage pour hiver
 disc_table_merged_hiv = pd.merge(
-    disc_table_hiv_f[["Year", "Nb_disciplines_hiv"]].rename(columns={"Nb_disciplines_hiv": "Nb_disc_f"}),
-    disc_table_hiv_tot[["Year", "Nb_disciplines_hiv"]].rename(columns={"Nb_disciplines_hiv": "Nb_disc_tot"}),
+    disc_table_hiv_f[["Year", "Nb_disc_f"]],
+    disc_table_hiv_tot[["Year", "Nb_disc_tot"]],
     on="Year"
 )
 
@@ -108,9 +112,11 @@ disc_table_merged_hiv["Pct_f"] = disc_table_merged_hiv["Nb_disc_f"] / (
 ) * 100
 
 # création du graphique pour hiver
-sns.lineplot(data=disc_table_merged_hiv, x="Year", y="Pct_f")
+sns.barplot(data=disc_table_merged_hiv, x="Year", y="Pct_f", color="skyblue")
 plt.title("Pourcentage de disciplines féminines aux JO d'hiver")
 plt.ylabel("Pourcentage de disciplines féminines (%)")
+plt.xticks(rotation=45)
+plt.tight_layout()
 plt.show()
 
 ##############################

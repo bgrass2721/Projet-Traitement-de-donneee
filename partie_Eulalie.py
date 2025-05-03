@@ -163,6 +163,7 @@ def parite_disc_hommes_femmes():
     # Sauvegarde des graphiques dans des fichiers
     plt.savefig("pourcentage_disciplines_feminines_été_hiver.png")
     plt.show()
+    return "\nOn peut voir que les JO se rapprochent d'une équité en terme de nombre de disciplines"
 
 ##############################
 
@@ -208,8 +209,8 @@ def disciplines_disp():
     anciennes_dis_ete.to_csv("anciennes_dis_ete.csv", index=False)
 
     # échantillons aléatoires de dix discplines disparues
-    ech_ete = anciennes_dis_ete.sample(n=min(10, len(anciennes_dis_ete)))
-    ech_hiv = anciennes_dis_hiv.sample(n=min(10, len(anciennes_dis_hiv)))
+    ech_ete = anciennes_dis_ete.sample(n=min(10, len(anciennes_dis_ete))).reset_index(drop=True)
+    ech_hiv = anciennes_dis_hiv.sample(n=min(10, len(anciennes_dis_hiv))).reset_index(drop=True)
 
     # meilleur affichage
     disc_disp_ete_hiv = {
@@ -219,8 +220,6 @@ def disciplines_disp():
 
     return disc_disp_ete_hiv
 
-    return ech_ete, ech_hiv
-
 
 print(disciplines_disp())
 
@@ -228,7 +227,7 @@ print(disciplines_disp())
 
 
 # Question 4 en python: Classement des Athletes JO ?
-def classement_competiteurs():
+def classement_competiteurs(nombre):
     """Renvoie un classement des compétiteurs les plus médaillés
     toutes disciplines confondues. Ne renvoie que les 10 premiers,
     le classement est trop long sinon.
@@ -289,7 +288,7 @@ def classement_competiteurs():
 
     classement = sorted(joueur_plus_med, key=lambda x: x[1])
 
-    top10 = classement[-10:]
+    top10 = classement[-nombre:]
     # les 10 derniers éléments parce que liste ordre croissant
     top10 = top10[::-1]
 

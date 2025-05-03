@@ -40,7 +40,7 @@ def Question_1(nom_athlete):
     return f"{len(m)}"
 
 
-print(Question_1("Michael Fred Phelps, II"))
+#print(Question_1("Michael Fred Phelps, II"))
 
 ##############################
 
@@ -75,16 +75,16 @@ def Question_2():
     nb_personnes_age = age_mode.max()
     # print(age_plus_frequent, nb_personnes)
     return (
-        f"La taille qui a remporté le plus de médaille est {taille_plus_frequente}"
+        f"\nLa taille qui a remporté le plus de médaille est {taille_plus_frequente}"
         f" avec {nb_personnes_taille} médailles. \n"
         f"Le poids qui a remporté le plus de médaille est {poids_plus_frequent}"
         f" avec {nb_personnes_poids} médailles. \n"
         f"L'âge qui a remporté le plus de médaille est {age_plus_frequent}"
-        f" avec {nb_personnes_age} médailles."
+        f" avec {nb_personnes_age} médailles.\n"
     )
 
 
-print(Question_2())
+#print(Question_2())
 
 ##############################
 
@@ -145,4 +145,4 @@ def Question_3(i):
     return classement_fin.head(i)
 
 
-print(Question_3(10))
+#print(Question_3(10))

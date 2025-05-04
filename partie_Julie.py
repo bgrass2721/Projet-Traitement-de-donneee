@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import csv
 
-
+# Table athlètes liste
 res = []
 with open(
     os.path.join(
@@ -12,17 +12,20 @@ with open(
     for line in fd:
         res.append(line.strip("\n").split(","))
 
+# Table athlètes
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
 )
 
-with open(os.path.join(
-    "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
-)) as fd:
-    file = csv.reader(fd)
-    for line in file:
-        res.append(line)
+# with open(os.path.join(
+#     "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
+# )) as fd:
+#     file = csv.reader(fd)
+#     for line in file:
+#         res.append(line)
 
+
+# Table NOC liste
 country = []
 with open(os.path.join(
     "donnees_jeux_olympiques", "donnees_jeux_olympiques", "noc_regions.csv"
@@ -31,7 +34,6 @@ with open(os.path.join(
     for line in file:
         country.append(line)
 
-'''
 
 # Le nombre de femmes parmi les participants par année.
 
@@ -84,7 +86,6 @@ medailles_US_ete = athlete_US_ete.groupby("Year")["Medal"].value_counts().groupb
 
 print("Médailles des Etats-Unis : ", medailles_US_ete)
 print("Moyenne des médailles des Etats-Unis : ", medailles_US_ete.mean())
-'''
 
 
 
@@ -94,6 +95,8 @@ medailles = []
 for athlete in res:
     if ("Bronze" in athlete[-1]) or ("Silver" in athlete[-1]) or ("Gold" in athlete[-1]):
         medailles.append(athlete)
+
+
 '''
 annee_ = [-1]
 for athlete in medailles:
@@ -129,13 +132,51 @@ def annees_participation(noc):
                     doublons.append(res[i][8])
                 # else:
                     # print("False", res[i][7])
-    print(doublons)
+    # print(doublons)
     return nb_annees
 
 
 print(annees_participation("USA"))
 
 
+compte = 0
+doublons = []
+for i in range(1, len(medailles)):
+    if "FRA" == medailles[i][7]:
+        if medailles[i][8] == "2016 Summer":
+           if medailles[i][1] not in doublons:
+                compte += 1
+                doublons.append(medailles[i][1])
+print(doublons)
+print("Compte :", compte)
+
+def medailles_pays(noc):
+    """Donne le nombre total d'athlètes médaillés, mais en comptant plusieurs fois ceux qui ont gagné plusieurs fois.
+    """
+    compte = 0
+    doublons = []
+    for i in range(1, len(medailles)):
+        if noc == medailles[i][7]:
+            if (medailles[1][0], medailles[i][8]) not in doublons:
+                if medailles[-1] in ("Bronze", "Silver", "Gold"):
+                    compte += 1
+                    doublons.append((medailles[1][0], medailles[i][8]))
+    return compte
+
+# print(medailles_pays("FRA"))
+
+'''
+def total_medailles(noc):
+    nb_medailles = 0
+    doublons = []
+    for i in range(1, len(res)):
+        if noc == res[i][7]:
+            if res[i][] not in doublons:
+                nb_medailles += 1
+                doublons.append((discipline, medaille, annee))
+    return nb_medailles
+'''
+'''
 [ligne.pop(14) for ligne in res]
 [ligne.pop(12) for ligne in res]
 [ligne.pop(11) for ligne in res]
@@ -145,7 +186,7 @@ print(annees_participation("USA"))
 [ligne.pop(4) for ligne in res]
 [ligne.pop(3) for ligne in res]
 [ligne.pop(2) for ligne in res]
-
+'''
 
 '''
 def total_medailles(noc):
@@ -157,8 +198,8 @@ def total_medailles(noc):
                 nb_medailles += 1
                 doublons.append((discipline, medaille, annee))
     return nb_medailles
-
-
+'''
+'''
 moyenne_medaille_pays = []
 for ligne in country:
     moyenne = total_medailles(ligne[0]) / annees_participation(ligne[0])

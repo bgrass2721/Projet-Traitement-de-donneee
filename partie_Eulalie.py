@@ -35,7 +35,7 @@ def bornes_medailles(annee):
     athletes_medailles_min = athletes_medailles.drop_duplicates()
 
     # compte le nombre de médailles par pays
-    # on séprare le code en deuc étapes pour min, pour respecter falk8
+    # on séprare le code en deux étapes pour min, pour respecter falk8
     regroup = (
         athletes_medailles_min.groupby("region")["Medal"].value_counts()
         )
@@ -83,7 +83,7 @@ def parite_disc_hommes_femmes():
 
     Returns:
     plot: graphiques avec les pourcentages de femmes aux jo
-    d'été et d'hver côte à côte
+    d'été et d'hiver côte à côte
     """
     dis_ete = athlete[athlete["Season"] == "Summer"]
     dis_hiv = athlete[athlete["Season"] == "Winter"]

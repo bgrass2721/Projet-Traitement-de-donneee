@@ -76,12 +76,12 @@ def interface():
                 print("\nVous n'avez pas tapé un nombre valide\n")
         elif question == "5":
             print(parite_disc_hommes_femmes())
-        elif question == "6":
+        elif question == "7":
             print("\nVoici 10 exemples aléatoires de disciplines qui ont disparues")
             print(disciplines_disp())
             print("\nN'hésitez pas à relancer la question pour avoir d'autres disciplines disparues")
             print("Si vous souhaitez voir l'intégralité des disciplines, allez voir les tableaux 'anciennes_dis_hiv.csv' et 'anciennes_dis_ete.csv'")
-        elif question == "7":
+        elif question == "6":
             nombre = int(input("\nTapez le nombre d'athlètes que vous voulez afficher dans le classement\n"))
             tableau = (classement_competiteurs(nombre))
             for i in range(len(tableau)):

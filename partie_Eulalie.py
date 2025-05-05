@@ -3,6 +3,7 @@ import csv
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
@@ -150,12 +151,16 @@ def parite_disc_hommes_femmes():
 
     # Graphique pour l'été
     sns.barplot(data=disc_table_ete, x="Year", y="Pct_f", color="blue", ax=axes[0])
+    axes[0].set_yticks(np.arange(0, disc_table_ete["Pct_f"].max() + 10, 5))
+    axes[0].grid(True, which='both', axis='y', linestyle='--', linewidth=0.5)
     axes[0].set_title("Pourcentage de disciplines féminines aux JO d'été")
     axes[0].set_ylabel("Pourcentage de disciplines féminines (%)")
     axes[0].tick_params(axis='x', rotation=45)
 
     # Graphique pour l'hiver
     sns.barplot(data=disc_table_hiv, x="Year", y="Pct_f", color="blue", ax=axes[1])
+    axes[1].set_yticks(np.arange(0, disc_table_hiv["Pct_f"].max() + 10, 5))
+    axes[1].grid(True, which='both', axis='y', linestyle='--', linewidth=0.5)
     axes[1].set_title("Pourcentage de disciplines féminines aux JO d'hiver")
     axes[1].set_ylabel("Pourcentage de disciplines féminines (%)")
     axes[1].tick_params(axis='x', rotation=45)

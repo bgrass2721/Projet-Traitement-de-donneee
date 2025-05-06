@@ -4,6 +4,7 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from IPython.display import display
 
 athlete = pd.read_csv(
     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
@@ -214,19 +215,25 @@ def disciplines_disp():
     anciennes_dis_ete.to_csv("anciennes_dis_ete.csv", index=False)
 
     # échantillons aléatoires de dix discplines disparues
-    ech_ete = anciennes_dis_ete.sample(n=min(10, len(anciennes_dis_ete))).reset_index(drop=True)
-    ech_hiv = anciennes_dis_hiv.sample(n=min(10, len(anciennes_dis_hiv))).reset_index(drop=True)
+    ech_ete = anciennes_dis_ete.sample(n=min(10, len(anciennes_dis_ete)))
+    ech_hiv = anciennes_dis_hiv.sample(n=min(10, len(anciennes_dis_hiv)))
 
     # meilleur affichage
-    disc_disp_ete_hiv = {
-        "Disciplines disparues aux JO d'été": ech_ete,
-        "Disciplines disparues aux JO d'hiver": ech_hiv
-    }
+    ech_ete = ech_ete.rename(columns={"Event": "Disciplines disparues été"})
+    ech_hiv = ech_hiv.rename(columns={"Event": "Disciplines disparues hiv"})
 
-    return disc_disp_ete_hiv
+    print("\nDisciplines disparues aux JO d'été :")
+    display(ech_ete.reset_index(drop=True))
+
+    print("\nDisciplines disparues aux JO d'hiver :")
+    display(ech_hiv.reset_index(drop=True))
+    disc_disp_ete = pd.DataFrame(ech_ete.reset_index(drop=True))
+    disc_disp_hiv = pd.DataFrame(ech_hiv.reset_index(drop=True))
+
+    return disc_disp_ete, disc_disp_hiv
 
 
-# print(disciplines_disp())
+print(disciplines_disp())
 
 ##############################
 

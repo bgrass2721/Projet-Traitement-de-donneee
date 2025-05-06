@@ -77,8 +77,8 @@ def interface():
         elif question == "5":
             print(parite_disc_hommes_femmes())
         elif question == "7":
-            print("\nVoici 10 exemples aléatoires de disciplines qui ont disparues")
-            print(disciplines_disp())
+            print("\nVoici 10 exemples aléatoires de disciplines qui ont disparues aux JO d'été et d'hiver")
+            disciplines_disp()
             print("\nN'hésitez pas à relancer la question pour avoir d'autres disciplines disparues")
             print("Si vous souhaitez voir l'intégralité des disciplines, allez voir les tableaux 'anciennes_dis_hiv.csv' et 'anciennes_dis_ete.csv'")
         elif question == "6":

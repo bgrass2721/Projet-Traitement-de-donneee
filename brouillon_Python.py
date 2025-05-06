@@ -2,6 +2,27 @@ import pandas as pd
 import os
 import csv
 
+# Table athlètes liste
+res = []
+with open(
+        os.path.join(
+            "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
+        )
+    ) as fd:
+        file = csv.reader(fd)
+        for line in file:
+            res.append(line)
+
+# Table NOC liste
+country = []
+with open(
+        os.path.join(
+            "donnees_jeux_olympiques", "donnees_jeux_olympiques", "noc_regions.csv"
+        )
+    ) as fd:
+        file = csv.reader(fd)
+        for line in file:
+            country.append(line)
 
 # Combien de médaillés les pays participants ont-ils compté en moyenne par JO ?
 
@@ -11,26 +32,25 @@ for athlete in res:
         medailles.append(athlete)
 
 
-'''
-annee_ = [-1]
-for athlete in medailles:
-    if athlete[-1] not in
 
-# print(medailles)
 
-medailles_pays
-for noc in country:
-    for cas in medailles:
-        if medailles[cas][1] == noc:
-            medailles_pays.append()
-'''
+# annee_ = [-1]
+# for athlete in medailles:
+#     if athlete[-1] not in
+
+# # print(medailles)
+
+# # medailles_pays
+# for noc in country:
+#     for cas in medailles:
+#         if medailles[cas][1] == noc:
+#             medailles_pays.append()
 
 
 # [print(res[i][2]) for i in range(1, len(res))]
 print(type(country[1][0]))
 
 pays = []
-
 
 def annees_participation(noc):
     """Donne le nombre d'années de participation d'un pays aux JO.
@@ -41,16 +61,16 @@ def annees_participation(noc):
         if noc == res[i][7]:
         # if isinstance(res[i][3], int):
             if res[i][8] not in doublons:
-                    # print("True")
-                    nb_annees += 1
-                    doublons.append(res[i][8])
-                # else:
-                    # print("False", res[i][7])
-    # print(doublons)
+                # print("True")
+                nb_annees += 1
+                doublons.append(res[i][8])
+            # else:
+            #     print("False", res[i][7])
+    print(doublons)
     return nb_annees
 
 
-print(annees_participation("USA"))
+print("Années participation USA :", annees_participation("USA"))
 
 
 compte = 0
@@ -71,25 +91,26 @@ def medailles_pays(noc):
     doublons = []
     for i in range(1, len(medailles)):
         if noc == medailles[i][7]:
-            if (medailles[1][0], medailles[i][8]) not in doublons:
+            if medailles[i][8] == 
+            if medailles[1][1] not in doublons:
                 if medailles[-1] in ("Bronze", "Silver", "Gold"):
                     compte += 1
                     doublons.append((medailles[1][0], medailles[i][8]))
     return compte
 
-# print(medailles_pays("FRA"))
+print("Médailles France :", medailles_pays("FRA"))
 
-'''
-def total_medailles(noc):
-    nb_medailles = 0
-    doublons = []
-    for i in range(1, len(res)):
-        if noc == res[i][7]:
-            if res[i][] not in doublons:
-                nb_medailles += 1
-                doublons.append((discipline, medaille, annee))
-    return nb_medailles
-'''
+
+# def total_medailles(noc):
+#     nb_medailles = 0
+#     doublons = []
+#     for i in range(1, len(res)):
+#         if noc == res[i][7]:
+#             if res[i][] not in doublons:
+#                 nb_medailles += 1
+#                 doublons.append((discipline, medaille, annee))
+#     return nb_medailles
+
 '''
 [ligne.pop(14) for ligne in res]
 [ligne.pop(12) for ligne in res]

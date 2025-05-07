@@ -33,20 +33,20 @@ def bornes_medailles(annee):
     # supprimer les doubles: quand l'épreuve est par équipe
     # ainsi on peut enlever tous les doublons
     #  tous les joueurs d'une même équipe auront les mêmes informations
-    athletes_medailles = athlete_2016_pays[["Medal", "region", "Event"]]
-    athletes_medailles_min = athletes_medailles.drop_duplicates()
+    athl_med = athlete_2016_pays[["Medal", "region", "Event"]]
+    athl_med_min = athl_med.drop_duplicates()
 
     # compte le nombre de médailles par pays
     # on séprare le code en deux étapes pour min, pour respecter falk8
     regroup = (
-        athletes_medailles_min.groupby("region")["Medal"].value_counts()
+        athl_med_min.groupby("region")["Medal"].value_counts()
         )
 
     regroup_min = regroup.groupby("region")
 
     # compteur max
     regroup_max = (
-        athletes_medailles.groupby("region")["Medal"].value_counts().groupby("region")
+        athl_med.groupby("region")["Medal"].value_counts().groupby("region")
         )
 
     # borne inférieure des médailles remportées JO 2016
@@ -73,17 +73,20 @@ def bornes_medailles(annee):
 
 ##############################
 
-# Question 2: Le nombre de disc accessibles aux femmes et aux hommes équivalent?
+# Question 2: Le nombre de disc accessibles aux femmes et aux hommes équ ?
 # Si oui, depuis quand l'est-il devenu?
-# on sépare les disciplines hiver et été, pour avoir une estimation plus précise
+# on sépare les disciplines hiver et été : estimation plus précise
 
 def parite_disc_hommes_femmes():
-    """Renvoie un graphique avec les porucentages de discplines féminines aux JO
+    """Renvoie un graphique avec les pourcentages de disc féminines aux JO
     Les graphiques sont aussi sauvegardés
 
-    parameters:
+    parameters
+    ----------
+    None
 
-    Returns:
+    Returns
+    -------
     plot: graphiques avec les pourcentages de femmes aux jo
     d'été et d'hiver côte à côte
     """
@@ -112,7 +115,7 @@ def parite_disc_hommes_femmes():
     disc_tot_ete = disc_annee_ete["Event"].nunique()
     disc_tot_hiv = disc_annee_hiv["Event"].nunique()
 
-    # ici, value_count n'aurait pas fonctionné: compte le nb d'oc d'une modalité
+    # ici, value_count ne fonctionné pas: compte le nb d'oc d'une modalité
     # problème: si on convertit en dataframe, le Year et le Sexe disparaissent
     # ce ne sont plus des colonnes
     # en fait, le group_by a transformé en index ces colonnes,
@@ -176,7 +179,7 @@ def parite_disc_hommes_femmes():
 
     print(disc_table_ete)
     print(disc_table_hiv)
-    return "\nOn peut voir que les JO se rapprochent d'une équité en terme de nombre de disciplines"
+    return "\nOn peut voir que les JO se rapprochent d'une équité"
 
 ##############################
 
@@ -184,16 +187,20 @@ def parite_disc_hommes_femmes():
 # Question 3: Des disciplines ont-elles disparu au fil des ans ? Lesquelles ?
 def disciplines_disp():
     """Renvoie deux tableaux avec les disciplines disparues de JO
-    Les disciplines sont considérées comme ayant disparues si cela fait 2 JO au moins
-    qu'elles n'ont pas été aux JO. Il fallait donc comparer en fonction de 2012 et 2016.
+    Les disciplines sont considérées comme ayant disparues si cela fait 2 JO
+    au moins qu'elles n'ont pas été aux JO.
+    Il fallait donc comparer en fonction de 2012 et 2016.
     Pour ne pas afficher quelque chose de trop lourd, seul un dizaine de
     disciplines sont affichées de manière aléatoire.
     Les tableaux affichant toutes les disciplines disparus aux JO d'été et
     d'hiver sont aussi sauvegardées.
 
-    parameters:
+    parameters
+    ----------
+    None
 
-    Returns:
+    Returns
+    -------
     dataframe: 2 dataframe avec disciplines disparues des JO
     """
     athlete = pd.read_csv(
@@ -207,7 +214,9 @@ def disciplines_disp():
     dis_an_hiv = d_ann[d_ann["Season"] == "Winter"]
 
     # sélection de données que l'on veut comparer
-    c_ete = dis_an_ete[(dis_an_ete["Year"] == 2016) | (dis_an_ete["Year"] == 2012)]
+    c_ete = dis_an_ete[
+        (dis_an_ete["Year"] == 2016) | (dis_an_ete["Year"] == 2012)
+        ]
     c_hiv = dis_an_hiv[(dis_an_hiv["Year"] == 2014) | (dis_an_hiv["Year"] == 2010)]
 
     # discplines qui existent aujourd'hui:
@@ -217,17 +226,17 @@ def disciplines_disp():
     # comparaison:
     # on enlève les doublons des disciplines totales et on compare
     dis_tot_ete = dis_an_ete[["Event"]].drop_duplicates()
-    anciennes_dis_ete = dis_tot_ete[~dis_tot_ete["Event"].isin(dis_ete_a["Event"])]
+    anc_dis_ete = dis_tot_ete[~dis_tot_ete["Event"].isin(dis_ete_a["Event"])]
 
     dis_tot_hiv = dis_an_hiv[["Event"]].drop_duplicates()
-    anciennes_dis_hiv = dis_tot_hiv[~dis_tot_hiv["Event"].isin(dis_hiv_a["Event"])]
+    anc_dis_hiv = dis_tot_hiv[~dis_tot_hiv["Event"].isin(dis_hiv_a["Event"])]
 
-    anciennes_dis_hiv.to_csv("anciennes_dis_hiv.csv", index=False)
-    anciennes_dis_ete.to_csv("anciennes_dis_ete.csv", index=False)
+    anc_dis_hiv.to_csv("anciennes_dis_hiv.csv", index=False)
+    anc_dis_ete.to_csv("anciennes_dis_ete.csv", index=False)
 
     # échantillons aléatoires de dix discplines disparues
-    ech_ete = anciennes_dis_ete.sample(n=min(10, len(anciennes_dis_ete)))
-    ech_hiv = anciennes_dis_hiv.sample(n=min(10, len(anciennes_dis_hiv)))
+    ech_ete = anc_dis_ete.sample(n=min(10, len(anc_dis_ete)))
+    ech_hiv = anc_dis_hiv.sample(n=min(10, len(anc_dis_hiv)))
 
     # meilleur affichage
     ech_ete = ech_ete.rename(columns={"Event": "Disciplines disparues été"})
@@ -256,9 +265,12 @@ def classement_competiteurs(nombre):
     - 2 point pour une médaille d'argent
     - 1 point pour une médaille de bronze
 
-    parameters:
+    parameters
+    ----------
+    None
 
-    Returns:
+    Returns
+    -------
     list[list[str]]: liste avec 10 premier du classements et leur score
     """
     res = []
@@ -273,7 +285,7 @@ def classement_competiteurs(nombre):
         for line in file:
             res.append(line)
 
-    # création d'une liste de liste contenant le nombre de victoires associé au nom
+    # création d'une liste de listes: nombre de victoires associées au nom
     nom = []
     medal = []
 

@@ -2,7 +2,6 @@ import pandas as pd
 import csv
 import os
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 
 # # Table athlètes df
@@ -15,11 +14,11 @@ import seaborn as sns
 #     "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
 # )
 
-#######################################################################################
+###############################################################################
 
 def prop_athletes_femmes():
-    """Renvoie la proportion de femme associée à chaque édition des JO et affiche le
-    barplot correspondant.
+    """Renvoie la proportion de femme associée à chaque édition des JO et
+    affiche le barplot correspondant.
 
     Parameters
     ----------
@@ -29,7 +28,7 @@ def prop_athletes_femmes():
     -------
     str
     """
-        
+
     # Table athlètes df
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
@@ -41,12 +40,21 @@ def prop_athletes_femmes():
 
     # Argument vide ou mettre la table comme argument ?
     athlete_femme = athlete[athlete["Sex"] == "F"]
-    nb_femme_an = athlete_femme.groupby("Year")["Name"].value_counts().groupby("Year").sum()
-    nb_athlete_an = athlete.groupby("Year")["Name"].value_counts().groupby("Year").sum()
+    nb_femme_an = athlete_femme.groupby("Year")["Name"].\
+        value_counts().groupby("Year").sum()
+    nb_athlete_an = athlete.groupby("Year")["Name"].\
+        value_counts().groupby("Year").sum()
     proportion_femme_an = nb_femme_an.div(nb_athlete_an)
-    proportion_femme_an = proportion_femme_an.reset_index(name="Proportion de femmes")
+    proportion_femme_an = proportion_femme_an.\
+        reset_index(name="Proportion de femmes")
 
-    plt.bar(proportion_femme_an["Year"], proportion_femme_an["Proportion de femmes"], width=1.5)
+    proportion_femme_an.to_csv("proportion_femme_an.csv", index=False)
+
+    plt.bar(
+        proportion_femme_an["Year"],
+        proportion_femme_an["Proportion de femmes"],
+        width=1.5
+    )
     plt.grid(which="both", axis="y")
     plt.xticks(year, rotation=90)
     plt.yticks([0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5])
@@ -59,14 +67,14 @@ def prop_athletes_femmes():
     return "\nLes femmes sont de plus en plus représentées depuis 1896."
 
 
-
-#######################################################################################
+###############################################################################
 
 # La moyenne des médailles remportées par les athlètes de la Chine
 
 def perf_chine():
-    """Donne le nombre de médaillés chinois par année, ainsi que la moyenne des 
-    médaillés, et affiche un barplot qui permet la comparaison entre les deux.
+    """Donne le nombre de médaillés chinois par année, ainsi que la moyenne
+    des médaillés, et affiche un barplot qui permet la comparaison entre les
+    deux.
 
     Parameters
     ----------
@@ -75,7 +83,7 @@ def perf_chine():
     Returns
     -------
     str
-    """   
+    """
     # Table athlètes df
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
@@ -84,16 +92,22 @@ def perf_chine():
     med = []
     for i in range(0, 191, 20):
         med.append(i)
-    
+
     athlete_chine = athlete[athlete["NOC"] == "CHN"]
     athlete_chine_ete = athlete_chine[athlete_chine["Season"] == "Summer"]
 
-    medailles_chine_ete = athlete_chine_ete.groupby("Year")["Medal"].value_counts().groupby("Year").sum()
+    medailles_chine_ete = athlete_chine_ete.groupby("Year")["Medal"].\
+        value_counts().groupby("Year").sum()
     moyenne = medailles_chine_ete.mean()
 
     medailles_chine_ete = medailles_chine_ete.reset_index(name='Medals')
+    medailles_chine_ete.to_csv("performance_chine.csv", index=False)
 
-    plt.bar(medailles_chine_ete["Year"], medailles_chine_ete["Medals"], width=3)
+    plt.bar(
+        medailles_chine_ete["Year"],
+        medailles_chine_ete["Medals"],
+        width=3
+    )
     plt.grid(which="both", axis="y")
     plt.axhline(y=moyenne, xmin=0, xmax=2018, color="red")
     plt.text(1981.25, 104, "Moyenne", color="red")
@@ -106,9 +120,10 @@ def perf_chine():
     plt.savefig("Chine.png")
     plt.show()
 
-    return f"\nLes JO de Pékin 2008 se démarquent par rapport à la moyenne qui est de {moyenne}."
+    return f"""\nLes JO de Pékin 2008 se démarquent par rapport à la moyenne
+    de la Chine, qui est de {moyenne}."""
 
-#######################################################################################
+###############################################################################
 
 # Combien d'athlètes ont participé en moyenne par pays (question en Python) ?
 
@@ -116,7 +131,9 @@ def perf_chine():
 # res = []
 # with open(
 #         os.path.join(
-#             "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
+#             "donnees_jeux_olympiques",
+#             "donnees_jeux_olympiques",
+#             "athlete_events.csv"
 #         )
 #     ) as fd:
 #         file = csv.reader(fd)
@@ -127,7 +144,9 @@ def perf_chine():
 # country = []
 # with open(
 #         os.path.join(
-#             "donnees_jeux_olympiques", "donnees_jeux_olympiques", "noc_regions.csv"
+#             "donnees_jeux_olympiques",
+#             "donnees_jeux_olympiques",
+#             "noc_regions.csv"
 #         )
 #     ) as fd:
 #         file = csv.reader(fd)
@@ -136,12 +155,14 @@ def perf_chine():
 
 
 # def annees_participation(noc):
-#     """Donne le nombre de participation d'un pays aux JO et la liste des jeux en question.
+#     """Donne le nombre de participation d'un pays aux JO et la liste des
+#     jeux en question.
 
 #     Parameters
 #     ----------
 #     noc : str
-#         Le NOC du pays dont on veut connaitre le nombre d'années de participation.
+#         Le NOC du pays dont on veut connaitre le nombre d'années de
+#         participation.
 
 #     Returns
 #     -------
@@ -169,7 +190,8 @@ def perf_chine():
 #     Parameters
 #     ----------
 #     noc : str
-#         Le NOC du pays dont on veut connaitre le nombre de participants pour une édition des JO donnée.
+#         Le NOC du pays dont on veut connaitre le nombre de participants pour
+#         une édition des JO donnée.
 #     games : str
 #         L'édition des JO.
 #     """
@@ -178,7 +200,7 @@ def perf_chine():
 #     for i in range(1, len(res)):
 #         if noc == res[i][7]:
 #             # print("Noc OK")
-#             if games == res[i][8]: 
+#             if games == res[i][8]:
 #                 # print("Games OK")
 #                 if res[i][1] not in participant:
 #                     compte += 1
@@ -189,7 +211,7 @@ def perf_chine():
 
 def moyenne_participants(noc):
     """Donne la moyenne des participants d'un pays aux JO.
-    
+
     Parameters
     ----------
     noc : str
@@ -199,37 +221,42 @@ def moyenne_participants(noc):
     -------
     float
     """
-        
+
     # Table athlètes liste
     res = []
     with open(
             os.path.join(
-                "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
+                "donnees_jeux_olympiques",
+                "donnees_jeux_olympiques",
+                "athlete_events.csv"
             )
-        ) as fd:
-            file = csv.reader(fd)
-            for line in file:
-                res.append(line)
+    ) as fd:
+        file = csv.reader(fd)
+        for line in file:
+            res.append(line)
 
     # Table NOC liste
     country = []
     with open(
             os.path.join(
-                "donnees_jeux_olympiques", "donnees_jeux_olympiques", "noc_regions.csv"
+                "donnees_jeux_olympiques",
+                "donnees_jeux_olympiques",
+                "noc_regions.csv"
             )
-        ) as fd:
-            file = csv.reader(fd)
-            for line in file:
-                country.append(line)
-
+    ) as fd:
+        file = csv.reader(fd)
+        for line in file:
+            country.append(line)
 
     def annees_participation(noc):
-        """Donne le nombre de participation d'un pays aux JO et la liste des jeux en question.
+        """Donne le nombre de participation d'un pays aux JO et la liste des
+        jeux en question.
 
         Parameters
         ----------
         noc : str
-            Le NOC du pays dont on veut connaitre le nombre d'années de participation.
+            Le NOC du pays dont on veut connaitre le nombre d'années de
+            participation.
 
         Returns
         -------
@@ -240,16 +267,10 @@ def moyenne_participants(noc):
         games = []  # Liste des années de participation d'un pays.
         for i in range(1, len(res)):
             if noc == res[i][7]:
-            # if isinstance(res[i][3], int):
                 if res[i][8] not in games:
-                    # print("True")
                     nb_annees += 1
                     games.append(res[i][8])
-                # else:
-                #     print("False", res[i][7])
-        # print(games)
         return nb_annees, games
-
 
     def participants_pays(noc, games):
         """Donne le nombre d'athlètes participant à une édition des JO donnée.
@@ -257,7 +278,8 @@ def moyenne_participants(noc):
         Parameters
         ----------
         noc : str
-            Le NOC du pays dont on veut connaitre le nombre de participants pour une édition des JO donnée.
+            Le NOC du pays dont on veut connaitre le nombre de participants
+            pour une édition des JO donnée.
         games : str
             L'édition des JO.
         """
@@ -265,9 +287,7 @@ def moyenne_participants(noc):
         participant = []
         for i in range(1, len(res)):
             if noc == res[i][7]:
-                # print("Noc OK")
-                if games == res[i][8]: 
-                    # print("Games OK")
+                if games == res[i][8]:
                     if res[i][1] not in participant:
                         compte += 1
                         participant.append(res[i][1])
@@ -282,6 +302,5 @@ def moyenne_participants(noc):
         total += compte_participants
     moyenne = total / nb_annees
 
-    return f"\nLe pays correspondant au NOC {noc} a envoyé des délégations de {moyenne} athlète(s) en moyenne."
-
-
+    return f"""\nLe pays correspondant au NOC {noc} a envoyé des délégations
+     de {moyenne} athlète(s) en moyenne."""

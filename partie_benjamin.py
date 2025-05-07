@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import csv
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 # python pur
@@ -40,7 +42,7 @@ def Question_1(nom_athlete):
     return f"{len(m)}"
 
 
-#print(Question_1("Michael Fred Phelps, II"))
+# print(Question_1("Michael Fred Phelps, II"))
 
 ##############################
 
@@ -84,7 +86,7 @@ def Question_2():
     )
 
 
-#print(Question_2())
+# print(Question_2())
 
 ##############################
 
@@ -98,6 +100,7 @@ def Question_3(i):
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
     )
     noc = pd.read_csv("donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv")
+    athlete_bis = athlete[["NOC", "Medal", "Event", "Year"]].drop_duplicates()
 
     def ajouter_points_si_condition(df, df_score):
         for i, ligne in df.iterrows():
@@ -112,18 +115,18 @@ def Question_3(i):
     classement = pd.DataFrame({"NOC": noc["NOC"], "Score": 0})
 
     # Ajouter des points en fonction de la médaille dans athlete
-    athlete["Points"] = np.select(
+    athlete_bis["Points"] = np.select(
         [
-            athlete["Medal"] == "Bronze",
-            athlete["Medal"] == "Silver",
-            athlete["Medal"] == "Gold",
+            athlete_bis["Medal"] == "Bronze",
+            athlete_bis["Medal"] == "Silver",
+            athlete_bis["Medal"] == "Gold",
         ],
         [1, 2, 3],
         default=0,
     )
 
     # Agréger les points par NOC dans athlete
-    athlete_points = athlete.groupby("NOC")["Points"].sum().reset_index()
+    athlete_points = athlete_bis.groupby("NOC")["Points"].sum().reset_index()
 
     # Fusionner les DataFrames avec les scores agrégés
     classement = classement.merge(athlete_points, on="NOC", how="left")
@@ -136,13 +139,24 @@ def Question_3(i):
         drop=True
     )
     classement_gen.index = classement_gen.index + 1  # Ajuster pour commencer à 1
-    classement_fin = classement_gen[["NOC", "Score"]]
-
+    classement_mieux = classement_gen.merge(noc, on="NOC", how="left")
+    classement_mieux_fin = classement_mieux[["region", "Score"]]
     # Afficher le classement final
     # print(classement_fin)
     # Exporter le DataFrame vers un fichier CSV
-    classement_fin.to_csv("classement_final.csv", index=False)
-    return classement_fin.head(i)
+    classement_mieux_fin.to_csv("classement_final.csv", index=False)
+    affiche = classement_mieux_fin.head(i).copy()
+    # Image
+    affiche.loc[:, "region"] = affiche["region"].astype(str)
+    plt.bar(affiche["region"], affiche["Score"])
+    plt.xlabel("Pays")
+    plt.ylabel("Score")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig(f"Classement_des_{i}_premiers_pays.png")
+    plt.show()
+
+    return affiche
 
 
-#print(Question_3(10))
+print(Question_3(10))

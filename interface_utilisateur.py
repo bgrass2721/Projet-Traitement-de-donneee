@@ -119,6 +119,14 @@ def interface():
                 print("\nVous n'avez pas tapé un nombre valide\n")
         elif question == "5":
             print(parite_disc_hommes_femmes())
+<<<<<<< HEAD
+=======
+        elif question == "7":
+            print("\n360 disciplines pratiquées ont disparu. Voici 10 exemples aléatoires de disciplines qui ont disparu des JO d'été et d'hiver")
+            disciplines_disp()
+            print("\nN'hésitez pas à relancer la question pour avoir d'autres disciplines disparues")
+            print("Si vous souhaitez voir l'intégralité des disciplines, allez voir les tableaux 'anciennes_dis_hiv.csv' et 'anciennes_dis_ete.csv'")
+>>>>>>> c5c1702888a19d1b381923c18a127bea2a0d3bff
         elif question == "6":
             nombre = int(
                 input(
@@ -127,6 +135,7 @@ def interface():
             )
             tableau = classement_competiteurs(nombre)
             for i in range(len(tableau)):
+<<<<<<< HEAD
                 print(f"{i}: {tableau[i][0]} avec {tableau[i][1]} médailles")
         elif question == "7":
             print(
@@ -139,6 +148,10 @@ def interface():
             print(
                 "Si vous souhaitez voir l'intégralité des disciplines, allez voir les tableaux 'anciennes_dis_hiv.csv' et 'anciennes_dis_ete.csv'"
             )
+=======
+                print(f"{i}: {tableau[i][0]} avec un score de {tableau[i][1]} ")
+        
+>>>>>>> c5c1702888a19d1b381923c18a127bea2a0d3bff
         elif question == "11":
             print(
                 "\nA l'aide d'un algorithme des k plus proches voisins et en utilisant les caractéristiques physiques (poids,taille,âge,sexe),"

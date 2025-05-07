@@ -232,9 +232,6 @@ def disciplines_disp():
 
     return disc_disp_ete, disc_disp_hiv
 
-
-print(disciplines_disp())
-
 ##############################
 
 

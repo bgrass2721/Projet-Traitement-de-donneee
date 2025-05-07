@@ -90,7 +90,7 @@ def parite_disc_hommes_femmes():
     dis_ete = athlete[athlete["Season"] == "Summer"]
     dis_hiv = athlete[athlete["Season"] == "Winter"]
 
-    # on ne garde que les colonnes utiles pour puvoir faire des group_by
+    # on ne garde que les colonnes utiles pour pouvoir faire des group_by
     evenement_ete = dis_ete[["Year", "Sex", "Event"]]
     evenement_hiv = dis_hiv[["Year", "Sex", "Event"]]
 
@@ -169,6 +169,9 @@ def parite_disc_hommes_femmes():
     # Sauvegarde des graphiques dans des fichiers
     plt.savefig("pourcentage_disciplines_feminines_été_hiver.png")
     plt.show()
+
+    print(disc_table_ete)
+    print(disc_table_hiv)
     return "\nOn peut voir que les JO se rapprochent d'une équité en terme de nombre de disciplines"
 
 ##############################

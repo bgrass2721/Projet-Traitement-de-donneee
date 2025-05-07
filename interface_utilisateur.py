@@ -75,6 +75,7 @@ def interface():
             else:
                 print("\nVous n'avez pas tapé un nombre valide\n")
         elif question == "5":
+            print("Vous pouvez voir les nombres d'épreuves féminines et totales dans le tableau ci-dessous, n'oubliez pas de femer l'onglet du graphique qui s'affiche")
             print(parite_disc_hommes_femmes())
         elif question == "7":
             print("\n360 disciplines pratiquées ont disparu. Voici 10 exemples aléatoires de disciplines qui ont disparu des JO d'été et d'hiver")

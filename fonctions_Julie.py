@@ -106,6 +106,7 @@ def perf_chine():
 
     medailles_chine_ete = medailles_chine_ete.reset_index(name="Medals")
     medailles_chine_ete.to_csv("performance_chine.csv", index=False)
+    moyenne_bis = int(moyenne)
 
     plt.bar(medailles_chine_ete["Year"], medailles_chine_ete["Medals"], width=3)
     plt.grid(which="both", axis="y")
@@ -121,7 +122,7 @@ def perf_chine():
     plt.show()
 
     return f"""\nLes JO de Pékin 2008 se démarquent par rapport à la moyenne
-    de la Chine, qui est de {moyenne}.
+    de la Chine, qui est de {moyenne_bis}.
     \nPour le détail des performances, veuillez consulter performance_chine.csv."""
 
 

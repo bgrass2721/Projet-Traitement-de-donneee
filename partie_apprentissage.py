@@ -124,7 +124,7 @@ def Question_apprentissage(poids, taille, age, sexe):
     print("Top 3 sports prédits :")
     for sport, prob in zip(top_3_sports, top_3_probs):
         print(f"{sport} : {prob * 100:.2f}%")
-    return "Il s'agit d'estimation des sports les plus probable"
+    return "Il s'agit d'estimations des sports les plus probables."
 
 
 # print(Question_apprentissage(48, 158, 20, 0))

@@ -163,7 +163,7 @@ def interface():
             print(prop_athletes_femmes())
         elif question == "9":
             print(perf_chine())
-        elif question == "0":
+        elif question == "10":
             print(
                 "Entrez le comité national olympique du pays dont vous voulez"
                 " connaître la taille moyenne des déléguations."

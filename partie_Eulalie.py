@@ -23,10 +23,10 @@ def bornes_medailles(annee):
     """
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
-        )
+    )
     pays = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
-        )
+    )
 
     athlete_2016 = athlete[athlete["Year"] == annee]
     athlete_2016_pays = athlete_2016.merge(pays, on="NOC", how="left")
@@ -38,16 +38,12 @@ def bornes_medailles(annee):
 
     # compte le nombre de médailles par pays
     # on séprare le code en deux étapes pour min, pour respecter falk8
-    regroup = (
-        athl_med_min.groupby("region")["Medal"].value_counts()
-        )
+    regroup = athl_med_min.groupby("region")["Medal"].value_counts()
 
     regroup_min = regroup.groupby("region")
 
     # compteur max
-    regroup_max = (
-        athl_med.groupby("region")["Medal"].value_counts().groupby("region")
-        )
+    regroup_max = athl_med.groupby("region")["Medal"].value_counts().groupby("region")
 
     # borne inférieure des médailles remportées JO 2016
     nb_min = regroup_min.sum()
@@ -64,8 +60,8 @@ def bornes_medailles(annee):
     table_max_min = pd.merge(
         table_max[["region", "Bornes supérieures"]],
         table_min[["region", "Bornes inférieures"]],
-        on="region"
-        )
+        on="region",
+    )
     table_max_min.to_csv("tableau_bornes_sup_et_inf.csv", index=False)
 
     return table_max_min
@@ -76,6 +72,7 @@ def bornes_medailles(annee):
 # Question 2: Le nombre de disc accessibles aux femmes et aux hommes équ ?
 # Si oui, depuis quand l'est-il devenu?
 # on sépare les disciplines hiver et été : estimation plus précise
+
 
 def parite_disc_hommes_femmes():
     """Renvoie un graphique avec les pourcentages de disc féminines aux JO
@@ -92,7 +89,7 @@ def parite_disc_hommes_femmes():
     """
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
-        )
+    )
 
     dis_ete = athlete[athlete["Season"] == "Summer"]
     dis_hiv = athlete[athlete["Season"] == "Winter"]
@@ -121,10 +118,10 @@ def parite_disc_hommes_femmes():
     # en fait, le group_by a transformé en index ces colonnes,
     # donc il faut réinitialiser l'index
 
-    disc_table_ete = disc_triees_ete.reset_index(name='Nb_disc_f')
-    disc_table_hiv = disc_triees_hiv.reset_index(name='Nb_disc_f')
-    disc_table_ete_tot = disc_tot_ete.reset_index(name='Nb_disc_tot')
-    disc_table_hiv_tot = disc_tot_hiv.reset_index(name='Nb_disc_tot')
+    disc_table_ete = disc_triees_ete.reset_index(name="Nb_disc_f")
+    disc_table_hiv = disc_triees_hiv.reset_index(name="Nb_disc_f")
+    disc_table_ete_tot = disc_tot_ete.reset_index(name="Nb_disc_tot")
+    disc_table_hiv_tot = disc_tot_hiv.reset_index(name="Nb_disc_tot")
 
     # pour faire pourcentage ensuite
     disc_table_ete_f = disc_table_ete[disc_table_ete["Sex"] == "F"]
@@ -134,24 +131,24 @@ def parite_disc_hommes_femmes():
     disc_table_ete = pd.merge(
         disc_table_ete_f[["Year", "Nb_disc_f"]],
         disc_table_ete_tot[["Year", "Nb_disc_tot"]],
-        on="Year"
-        )
+        on="Year",
+    )
 
-    disc_table_ete["Pct_f"] = disc_table_ete["Nb_disc_f"] / (
-        disc_table_ete["Nb_disc_tot"]
-        ) * 100
+    disc_table_ete["Pct_f"] = (
+        disc_table_ete["Nb_disc_f"] / (disc_table_ete["Nb_disc_tot"]) * 100
+    )
 
     # calcul du pourcentage pour hiver
     disc_table_hiv = pd.merge(
         disc_table_hiv_f[["Year", "Nb_disc_f"]],
         disc_table_hiv_tot[["Year", "Nb_disc_tot"]],
-        on="Year"
+        on="Year",
     )
 
     # pourcentage hiver
-    disc_table_hiv["Pct_f"] = disc_table_hiv["Nb_disc_f"] / (
-        disc_table_hiv["Nb_disc_tot"]
-    ) * 100
+    disc_table_hiv["Pct_f"] = (
+        disc_table_hiv["Nb_disc_f"] / (disc_table_hiv["Nb_disc_tot"]) * 100
+    )
 
     # graphique côte à côte des disciplines été et hiver
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
@@ -160,18 +157,18 @@ def parite_disc_hommes_femmes():
     # Graphique pour l'été
     sns.barplot(data=disc_table_ete, x="Year", y="Pct_f", color="blue", ax=axes[0])
     axes[0].set_yticks(np.arange(0, disc_table_ete["Pct_f"].max() + 10, 5))
-    axes[0].grid(True, which='both', axis='y', linestyle='--', linewidth=0.5)
+    axes[0].grid(True, which="both", axis="y", linestyle="--", linewidth=0.5)
     axes[0].set_title("Pourcentage de disciplines féminines aux JO d'été")
     axes[0].set_ylabel("Pourcentage de disciplines féminines (%)")
-    axes[0].tick_params(axis='x', rotation=45)
+    axes[0].tick_params(axis="x", rotation=45)
 
     # Graphique pour l'hiver
     sns.barplot(data=disc_table_hiv, x="Year", y="Pct_f", color="blue", ax=axes[1])
     axes[1].set_yticks(np.arange(0, disc_table_hiv["Pct_f"].max() + 10, 5))
-    axes[1].grid(True, which='both', axis='y', linestyle='--', linewidth=0.5)
+    axes[1].grid(True, which="both", axis="y", linestyle="--", linewidth=0.5)
     axes[1].set_title("Pourcentage de disciplines féminines aux JO d'hiver")
     axes[1].set_ylabel("Pourcentage de disciplines féminines (%)")
-    axes[1].tick_params(axis='x', rotation=45)
+    axes[1].tick_params(axis="x", rotation=45)
 
     # Sauvegarde des graphiques dans des fichiers
     plt.savefig("pourcentage_disciplines_feminines_été_hiver.png")
@@ -180,6 +177,7 @@ def parite_disc_hommes_femmes():
     print(disc_table_ete)
     print(disc_table_hiv)
     return "\nOn peut voir que les JO se rapprochent d'une équité"
+
 
 ##############################
 
@@ -205,7 +203,7 @@ def disciplines_disp():
     """
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
-        )
+    )
 
     d_ann = athlete[["Year", "Event", "Season"]]
 
@@ -214,9 +212,7 @@ def disciplines_disp():
     dis_an_hiv = d_ann[d_ann["Season"] == "Winter"]
 
     # sélection de données que l'on veut comparer
-    c_ete = dis_an_ete[
-        (dis_an_ete["Year"] == 2016) | (dis_an_ete["Year"] == 2012)
-        ]
+    c_ete = dis_an_ete[(dis_an_ete["Year"] == 2016) | (dis_an_ete["Year"] == 2012)]
     c_hiv = dis_an_hiv[(dis_an_hiv["Year"] == 2014) | (dis_an_hiv["Year"] == 2010)]
 
     # discplines qui existent aujourd'hui:
@@ -251,6 +247,7 @@ def disciplines_disp():
     disc_disp_hiv = pd.DataFrame(ech_hiv.reset_index(drop=True))
 
     return disc_disp_ete, disc_disp_hiv
+
 
 ##############################
 
@@ -290,21 +287,21 @@ def classement_competiteurs(nombre):
     medal = []
 
     for athl in res:
-        if ("Bronze" in athl[-1]):
+        if "Bronze" in athl[-1]:
             if athl[1] in nom:
                 n = nom.index(athl[1])  # indice du nom
                 medal[n] += 1  # on rajoute 1 à l'indice du nom
             else:
                 nom.append(athl[1])
                 medal.append(1)
-        if ("Silver" in athl[-1]):
+        if "Silver" in athl[-1]:
             if athl[1] in nom:
                 n = nom.index(athl[1])
                 medal[n] += 2
             else:
                 nom.append(athl[1])
                 medal.append(2)
-        if ("Gold" in athl[-1]):
+        if "Gold" in athl[-1]:
             if athl[1] in nom:
                 n = nom.index(athl[1])
                 medal[n] += 3

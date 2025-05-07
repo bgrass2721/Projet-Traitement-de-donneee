@@ -5,15 +5,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# Table athlètes df
-athlete = pd.read_csv(
-    "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
-)
+# # Table athlètes df
+# athlete = pd.read_csv(
+#     "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
+# )
 
-# Table noc df
-country_df = pd.read_csv(
-    "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
-)
+# # Table noc df
+# country_df = pd.read_csv(
+#     "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
+# )
 
 #######################################################################################
 
@@ -27,11 +27,18 @@ def prop_athletes_femmes():
 
     Returns
     -------
-    DataFrame
+    str
     """
+        
+    # Table athlètes df
+    athlete = pd.read_csv(
+        "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
+    )
+
     year = []
     for i in range(1896, 2017, 4):
         year.append(i)
+
     # Argument vide ou mettre la table comme argument ?
     athlete_femme = athlete[athlete["Sex"] == "F"]
     nb_femme_an = athlete_femme.groupby("Year")["Name"].value_counts().groupby("Year").sum()
@@ -46,9 +53,12 @@ def prop_athletes_femmes():
     plt.xlabel("Année")
     plt.ylabel("Proportion de femmes")
     plt.title("Proportion de femmes par an parmi les athlètes olympiques")
+    plt.savefig("Proportion_femmes.png")
     plt.show()
 
-    return proportion_femme_an
+    return "\nLes femmes sont de plus en plus représentées depuis 1896."
+
+
 
 #######################################################################################
 
@@ -64,9 +74,13 @@ def perf_chine():
 
     Returns
     -------
-    DataFrame
-    float
-    """
+    str
+    """   
+    # Table athlètes df
+    athlete = pd.read_csv(
+        "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
+    )
+
     med = []
     for i in range(0, 191, 20):
         med.append(i)
@@ -89,9 +103,10 @@ def perf_chine():
     plt.xlabel("Année")
     plt.ylabel("Médailles de la Chine")
     plt.title("Performance de la Chine aux Jeux Olympiques")
+    plt.savefig("Chine.png")
     plt.show()
 
-    return medailles_chine_ete, moyenne
+    return f"\nLes JO de Pékin 2008 se démarquent par rapport à la moyenne qui est de {moyenne}."
 
 #######################################################################################
 
@@ -267,5 +282,3 @@ def moyenne_participants(noc):
         total += compte_participants
     moyenne = total / nb_annees
     return moyenne
-
-print(moyenne_participants("FRA"))

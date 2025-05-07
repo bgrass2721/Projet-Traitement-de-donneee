@@ -101,7 +101,8 @@ def Question_apprentissage(poids, taille, age, sexe):
     knn_best.fit(X_train_scaled, y_train)
     accuracy_final = top_3_accuracy(knn_best, X_test_scaled, y_test)
     print(
-        f"\nLe taux de précision final de notre algorithme est de {accuracy_final*100}%\n"
+        f"\nLe taux de précision final de notre"
+        f" algorithme est de {accuracy_final*100}%\n"
     )
     nouvel_athlete = np.array([[taille, poids, age, sexe]])
     nouvel_athlete_scaled = scaler.transform(nouvel_athlete)
@@ -126,6 +127,6 @@ def Question_apprentissage(poids, taille, age, sexe):
     return "Il s'agit d'estimation des sports les plus probable"
 
 
-print(Question_apprentissage(48, 158, 20, 0))
+# print(Question_apprentissage(48, 158, 20, 0))
 # print(Question_apprentissage(45, 157, 21, 0))
 # print(Question_apprentissage(80, 186, 20, 1))

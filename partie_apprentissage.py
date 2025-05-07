@@ -17,7 +17,6 @@ def Question_apprentissage(poids, taille, age, sexe):
 
     # Filtrer les sports avec plus de 5000 athlètes
     sports_filtrés = athletes_par_sport[athletes_par_sport > 5000].index
-
     # Créer un DataFrame avec les sports sélectionnés
     df_filtré = df[df["Sport"].isin(sports_filtrés)]
 
@@ -48,7 +47,7 @@ def Question_apprentissage(poids, taille, age, sexe):
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_val_scaled = scaler.transform(X_val)
-    # X_test_scaled = scaler.transform(X_test)
+    X_test_scaled = scaler.transform(X_test)
 
     # Fonction pour tester si le vrai sport est dans le top 3 des prédictions
 
@@ -100,7 +99,10 @@ def Question_apprentissage(poids, taille, age, sexe):
     # Entraîner le modèle final avec le meilleur k
     knn_best = KNeighborsClassifier(n_neighbors=best_k)
     knn_best.fit(X_train_scaled, y_train)
-
+    accuracy_final = top_3_accuracy(knn_best, X_test_scaled, y_test)
+    print(
+        f"\nLe taux de précision final de notre algorithme est de {accuracy_final*100}%\n"
+    )
     nouvel_athlete = np.array([[taille, poids, age, sexe]])
     nouvel_athlete_scaled = scaler.transform(nouvel_athlete)
 
@@ -124,6 +126,6 @@ def Question_apprentissage(poids, taille, age, sexe):
     return "Il s'agit d'estimation des sports les plus probable"
 
 
-# print(Question_apprentissage(48, 158, 20, 0))
+print(Question_apprentissage(48, 158, 20, 0))
 # print(Question_apprentissage(45, 157, 21, 0))
 # print(Question_apprentissage(80, 186, 20, 1))

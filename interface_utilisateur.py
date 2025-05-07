@@ -8,6 +8,8 @@ from partie_Eulalie import disciplines_disp
 from partie_Eulalie import classement_competiteurs
 from partie_apprentissage import Question_apprentissage
 from fonctions_Julie import prop_athletes_femmes
+from fonctions_Julie import perf_chine
+from fonctions_Julie import moyenne_participants
 
 warnings.filterwarnings("ignore")
 
@@ -159,6 +161,16 @@ def interface():
             )
         elif question == "8":
             print(prop_athletes_femmes())
+        elif question == "9":
+            print(perf_chine())
+        elif question == "10":
+            print(
+                "Entrez le comité national olympique du pays dont vous voulez"
+                " connaître la taille moyenne des déléguations."
+            )
+            NOC = input("\n")
+            print(moyenne_participants(NOC))
+
         elif question == "11":
             print(
                 "\nA l'aide d'un algorithme des k plus proches voisins et en utilisant"

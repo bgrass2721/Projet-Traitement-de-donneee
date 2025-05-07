@@ -48,6 +48,8 @@ def prop_athletes_femmes():
     proportion_femme_an = proportion_femme_an.\
         reset_index(name="Proportion de femmes")
 
+    proportion_femme_an.to_csv("proportion_femme_an.csv", index=False)
+
     plt.bar(
         proportion_femme_an["Year"],
         proportion_femme_an["Proportion de femmes"],
@@ -99,6 +101,7 @@ def perf_chine():
     moyenne = medailles_chine_ete.mean()
 
     medailles_chine_ete = medailles_chine_ete.reset_index(name='Medals')
+    medailles_chine_ete.to_csv("performance_chine.csv", index=False)
 
     plt.bar(
         medailles_chine_ete["Year"],
@@ -265,12 +268,8 @@ def moyenne_participants(noc):
         for i in range(1, len(res)):
             if noc == res[i][7]:
                 if res[i][8] not in games:
-                    # print("True")
                     nb_annees += 1
                     games.append(res[i][8])
-                # else:
-                #     print("False", res[i][7])
-        # print(games)
         return nb_annees, games
 
     def participants_pays(noc, games):
@@ -288,9 +287,7 @@ def moyenne_participants(noc):
         participant = []
         for i in range(1, len(res)):
             if noc == res[i][7]:
-                # print("Noc OK")
                 if games == res[i][8]:
-                    # print("Games OK")
                     if res[i][1] not in participant:
                         compte += 1
                         participant.append(res[i][1])

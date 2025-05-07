@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 
 ###############################################################################
 
+
 def prop_athletes_femmes():
     """Renvoie la proportion de femme associée à chaque édition des JO et
     affiche le barplot correspondant.
@@ -40,20 +41,19 @@ def prop_athletes_femmes():
 
     # Argument vide ou mettre la table comme argument ?
     athlete_femme = athlete[athlete["Sex"] == "F"]
-    nb_femme_an = athlete_femme.groupby("Year")["Name"].\
-        value_counts().groupby("Year").sum()
-    nb_athlete_an = athlete.groupby("Year")["Name"].\
-        value_counts().groupby("Year").sum()
+    nb_femme_an = (
+        athlete_femme.groupby("Year")["Name"].value_counts().groupby("Year").sum()
+    )
+    nb_athlete_an = athlete.groupby("Year")["Name"].value_counts().groupby("Year").sum()
     proportion_femme_an = nb_femme_an.div(nb_athlete_an)
-    proportion_femme_an = proportion_femme_an.\
-        reset_index(name="Proportion de femmes")
+    proportion_femme_an = proportion_femme_an.reset_index(name="Proportion de femmes")
 
     proportion_femme_an.to_csv("proportion_femme_an.csv", index=False)
 
     plt.bar(
         proportion_femme_an["Year"],
         proportion_femme_an["Proportion de femmes"],
-        width=1.5
+        width=1.5,
     )
     plt.grid(which="both", axis="y")
     plt.xticks(year, rotation=90)
@@ -70,6 +70,7 @@ def prop_athletes_femmes():
 ###############################################################################
 
 # La moyenne des médailles remportées par les athlètes de la Chine
+
 
 def perf_chine():
     """Donne le nombre de médaillés chinois par année, ainsi que la moyenne
@@ -96,18 +97,15 @@ def perf_chine():
     athlete_chine = athlete[athlete["NOC"] == "CHN"]
     athlete_chine_ete = athlete_chine[athlete_chine["Season"] == "Summer"]
 
-    medailles_chine_ete = athlete_chine_ete.groupby("Year")["Medal"].\
-        value_counts().groupby("Year").sum()
+    medailles_chine_ete = (
+        athlete_chine_ete.groupby("Year")["Medal"].value_counts().groupby("Year").sum()
+    )
     moyenne = medailles_chine_ete.mean()
 
-    medailles_chine_ete = medailles_chine_ete.reset_index(name='Medals')
+    medailles_chine_ete = medailles_chine_ete.reset_index(name="Medals")
     medailles_chine_ete.to_csv("performance_chine.csv", index=False)
 
-    plt.bar(
-        medailles_chine_ete["Year"],
-        medailles_chine_ete["Medals"],
-        width=3
-    )
+    plt.bar(medailles_chine_ete["Year"], medailles_chine_ete["Medals"], width=3)
     plt.grid(which="both", axis="y")
     plt.axhline(y=moyenne, xmin=0, xmax=2018, color="red")
     plt.text(1981.25, 104, "Moyenne", color="red")
@@ -122,6 +120,7 @@ def perf_chine():
 
     return f"""\nLes JO de Pékin 2008 se démarquent par rapport à la moyenne
     de la Chine, qui est de {moyenne}."""
+
 
 ###############################################################################
 
@@ -225,11 +224,9 @@ def moyenne_participants(noc):
     # Table athlètes liste
     res = []
     with open(
-            os.path.join(
-                "donnees_jeux_olympiques",
-                "donnees_jeux_olympiques",
-                "athlete_events.csv"
-            )
+        os.path.join(
+            "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
+        )
     ) as fd:
         file = csv.reader(fd)
         for line in file:
@@ -238,11 +235,9 @@ def moyenne_participants(noc):
     # Table NOC liste
     country = []
     with open(
-            os.path.join(
-                "donnees_jeux_olympiques",
-                "donnees_jeux_olympiques",
-                "noc_regions.csv"
-            )
+        os.path.join(
+            "donnees_jeux_olympiques", "donnees_jeux_olympiques", "noc_regions.csv"
+        )
     ) as fd:
         file = csv.reader(fd)
         for line in file:

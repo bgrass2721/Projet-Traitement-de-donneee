@@ -6,13 +6,6 @@ import seaborn as sns
 import numpy as np
 from IPython.display import display
 
-athlete = pd.read_csv(
-    "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
-)
-pays = pd.read_csv(
-    "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
-    )
-
 # Question 1:
 # min et max de chaque pays
 # ne garde que les athlètes de 2016
@@ -28,6 +21,13 @@ def bornes_medailles(annee):
     Returns:
     DataFrame: Tableau avec les pays, bornes inférieures et supérieures
     """
+    athlete = pd.read_csv(
+        "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
+        )
+    pays = pd.read_csv(
+        "donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv"
+        )
+
     athlete_2016 = athlete[athlete["Year"] == annee]
     athlete_2016_pays = athlete_2016.merge(pays, on="NOC", how="left")
     # supprimer les doubles: quand l'épreuve est par équipe
@@ -87,6 +87,10 @@ def parite_disc_hommes_femmes():
     plot: graphiques avec les pourcentages de femmes aux jo
     d'été et d'hiver côte à côte
     """
+    athlete = pd.read_csv(
+        "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
+        )
+
     dis_ete = athlete[athlete["Season"] == "Summer"]
     dis_hiv = athlete[athlete["Season"] == "Winter"]
 
@@ -192,6 +196,10 @@ def disciplines_disp():
     Returns:
     dataframe: 2 dataframe avec disciplines disparues des JO
     """
+    athlete = pd.read_csv(
+        "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
+        )
+
     d_ann = athlete[["Year", "Event", "Season"]]
 
     # séparation des disciplines par saison

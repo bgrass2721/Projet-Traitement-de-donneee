@@ -52,7 +52,7 @@ def questionnaire():
 
     question = input(
         "\nTapez le numéro de la question dont vous souhaitez avoir la réponse, tapez 0"
-        " pour quitter\n"
+        " pour quitter.\n"
     )
     return question
 
@@ -65,16 +65,16 @@ def interface():
             print("\nOn espère que notre projet vous a plu !\n")
             return "fin"
         elif question == "1":
-            print("\nSi vous souhaitez avoir le nombre de médaille de Phelps, tapez 1 ")
+            print("\nSi vous souhaitez avoir le nombre de médailles de Michael Phelps, tapez 1. ")
             print(
-                "Si vous souhaitez connaître le nombre de médaille cumulé d'un nom de"
-                " votre choix, tapez 2\n"
+                "Si vous souhaitez connaître le nombre cumulé de médailles d'un athlète de"
+                " votre choix, tapez 2.\n"
             )
             choix = input()
             if choix == "1":
                 print(
                     f"Le nombre total de médailles obtenues par Phelps "
-                    f"est {Question_1('Michael Fred Phelps, II')}"
+                    f"est {Question_1('Michael Fred Phelps, II')}."
                 )
             elif choix == "2":
                 nom = input(
@@ -82,7 +82,7 @@ def interface():
                 )
                 print(
                     f"Le nombre total de médailles obtenues par {nom} est"
-                    f" {Question_1(nom)}"
+                    f" {Question_1(nom)}."
                 )
             else:
                 print("\nVous n'avez pas tapé un nombre valide\n")
@@ -92,54 +92,54 @@ def interface():
             nombre = int(
                 input(
                     "\n Tapez le nombre de pays que vous voulez afficher dans"
-                    " le classement\n"
+                    " le classement.\n"
                 )
             )
             print(Question_3(nombre))
             print(
                 "\nPour voir l'intégralité du classement, voir le tableau"
-                " 'classement_final'"
+                " 'classement_final'."
             )
         elif question == "4":
-            print("\nSi vous souhaitez avoir le résultat pour les JO 2016, tapez 1 ")
+            print("\nSi vous souhaitez avoir le résultat pour les JO 2016, tapez 1. ")
             print(
                 "Si vous souhaitez connaître le résultat pour une année de votre choix,"
-                " tapez 2\n"
+                " tapez 2.\n"
             )
             choix = input()
             if choix == "1":
                 print(bornes_medailles(2016))
                 print(
                     "\nSi vous souhaitez voir le tableau en entier, regardez le tableau"
-                    " 'tableau_bornes_sup_et_inf.csv' qui a été téléchargé"
+                    " 'tableau_bornes_sup_et_inf.csv' qui a été téléchargé."
                 )
             elif choix == "2":
                 annee = int(
                     input(
                         "\nTapez le numéro de l'année dont vous souhaitez avoir"
-                        " la réponse\n"
+                        " la réponse.\n"
                     )
                 )
                 print(bornes_medailles(annee))
                 print(
                     "\nSi vous souhaitez voir le tableau en entier, regardez le tableau"
-                    " 'tableau_bornes_sup_et_inf.csv' qui a été téléchargé"
+                    " 'tableau_bornes_sup_et_inf.csv' qui a été téléchargé."
                 )
 
             else:
-                print("\nVous n'avez pas tapé un nombre valide\n")
+                print("\nVous n'avez pas tapé un nombre valide.\n")
         elif question == "5":
             print(
                 "Vous pouvez voir les nombres d'épreuves féminines et totales dans le"
                 " tableau ci-dessous, n'oubliez pas de fermer l'onglet du graphique"
-                " qui s'affiche"
+                " qui s'affiche."
             )
             print(parite_disc_hommes_femmes())
         elif question == "6":
             nombre = int(
                 input(
                     "\nTapez le nombre d'athlètes que vous voulez afficher dans le"
-                    " classement\n"
+                    " classement.\n"
                 )
             )
             tableau = classement_competiteurs(nombre)
@@ -148,16 +148,16 @@ def interface():
         elif question == "7":
             print(
                 "\n360 disciplines pratiquées ont disparu. Voici 10 exemples"
-                " aléatoires de disciplines qui ont disparu des JO d'été et d'hiver"
+                " aléatoires de disciplines qui ont disparu des JO d'été et d'hiver."
             )
             disciplines_disp()
             print(
                 "\nN'hésitez pas à relancer la question pour avoir d'autres"
-                " disciplines disparues"
+                " disciplines disparues."
             )
             print(
                 "Si vous souhaitez voir l'intégralité des disciplines, allez voir les"
-                " tableaux 'anciennes_dis_hiv.csv' et 'anciennes_dis_ete.csv'"
+                " tableaux 'anciennes_dis_hiv.csv' et 'anciennes_dis_ete.csv'."
             )
         elif question == "8":
             print(prop_athletes_femmes())
@@ -178,35 +178,35 @@ def interface():
             )
             print(
                 "nous déterminons les 3 sports où vos caractéristiques ont le plus de"
-                " chance de gagner une médaille"
+                " chance de gagner une médaille."
             )
             choix = input(
                 "\nSi vous voulez rentrer vos caractéristiques tapez 1, si vous voulez"
-                " un exemple tapez 2"
+                " un exemple tapez 2."
             )
             if choix == "1":
-                poids = int(input("Tapez votre poids (en kg)\n"))
-                taille = int(input("Tapez votre taille (en cm)\n"))
-                age = int(input("Tapez votre age (en année)\n"))
+                poids = int(input("Tapez votre poids (en kg).\n"))
+                taille = int(input("Tapez votre taille (en cm).\n"))
+                age = int(input("Tapez votre age (en année).\n"))
                 sexe = int(
-                    input("Tapez 0 si vous êtes une femme, 1 si vous êtes un homme\n")
+                    input("Tapez 0 si vous êtes une femme, 1 si vous êtes un homme.\n")
                 )
-                print("\nça prends quelques instants...\n")
+                print("\nAttendez quelques instants...\n")
                 print(Question_apprentissage(poids, taille, age, sexe))
             elif choix == "2":
                 print(
                     "\nNous prendrons l'exemple ici d'un homme de 22 ans, de 175 cm et"
                     " de 65 kg\n"
                 )
-                print("\nça prends quelques instants...\n")
+                print("\nUn petit instant...\n")
                 print(Question_apprentissage(65, 175, 22, 1))
             else:
-                print("\nLe nombre n'est pas valide\n")
+                print("\nLe nombre tapé n'est pas valide.\n")
 
         else:
-            print("\nLe nombre tapé n'est pas valide\n")
+            print("\nLe nombre tapé n'est pas valide.\n")
 
-        input("\nAppuyez sur entrer quand vous voulez continuer")
+        input("\nAppuyez sur entrer quand vous voulez continuer.")
 
 
 interface()

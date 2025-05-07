@@ -64,7 +64,9 @@ def prop_athletes_femmes():
     plt.savefig("Proportion_femmes.png")
     plt.show()
 
-    return "\nLes femmes sont de plus en plus représentées depuis 1896."
+    return """\nLes femmes sont de plus en plus représentées depuis 1896.
+    \nPour plus d'informations, veuillez consulter le fichier
+    proportion_femme_an.csv."""
 
 
 ###############################################################################
@@ -119,7 +121,8 @@ def perf_chine():
     plt.show()
 
     return f"""\nLes JO de Pékin 2008 se démarquent par rapport à la moyenne
-    de la Chine, qui est de {moyenne}."""
+    de la Chine, qui est de {moyenne}.
+    \nPour le détail des performances, veuillez consulter performance_chine.csv."""
 
 
 ###############################################################################

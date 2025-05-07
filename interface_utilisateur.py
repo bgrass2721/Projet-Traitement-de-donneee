@@ -144,7 +144,7 @@ def interface():
             )
             tableau = classement_competiteurs(nombre)
             for i in range(len(tableau)):
-                print(f"{i}: {tableau[i][0]} avec un score de {tableau[i][1]} ")
+                print(f"{i}: {tableau[i][0]} avec un score de {tableau[i][1]}. ")
         elif question == "7":
             print(
                 "\n360 disciplines pratiquées ont disparu. Voici 10 exemples"
@@ -163,7 +163,7 @@ def interface():
             print(prop_athletes_femmes())
         elif question == "9":
             print(perf_chine())
-        elif question == "10":
+        elif question == "0":
             print(
                 "Entrez le comité national olympique du pays dont vous voulez"
                 " connaître la taille moyenne des déléguations."

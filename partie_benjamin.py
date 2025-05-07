@@ -91,11 +91,11 @@ def Question_2():
     nb_personnes_age = age_mode.max()
     # print(age_plus_frequent, nb_personnes)
     return (
-        f"\nLa taille qui a remporté le plus de médaille est {taille_plus_frequente}"
+        f"\nLa taille qui a remporté le plus de médailles est {taille_plus_frequente}"
         f" avec {nb_personnes_taille} médailles. \n"
-        f"Le poids qui a remporté le plus de médaille est {poids_plus_frequent}"
+        f"Le poids qui a remporté le plus de médailles est {poids_plus_frequent}"
         f" avec {nb_personnes_poids} médailles. \n"
-        f"L'âge qui a remporté le plus de médaille est {age_plus_frequent}"
+        f"L'âge qui a remporté le plus de médailles est {age_plus_frequent}"
         f" avec {nb_personnes_age} médailles.\n"
     )
 

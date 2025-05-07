@@ -30,7 +30,18 @@ def prop_athletes_femmes():
 # La moyenne des médailles remportées par les athlètes de la Chine
 
 def perf_chine():
+    """Donne le nombre de médaillés chinois par année, ainsi que la moyenne des 
+    médaillés, et affiche un barplot qui permet la comparaison entre les deux.
 
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    DataFrame
+    float
+    """
     athlete_chine = athlete[athlete["NOC"] == "CHN"]
     athlete_chine_ete = athlete_chine[athlete_chine["Season"] == "Summer"]
 
@@ -42,19 +53,42 @@ def perf_chine():
     print("Médailles de la Chine : ", medailles_chine_ete)
     print("Moyenne des médailles de la Chine : ", moyenne)
 
-    plt.bar(medailles_chine_ete["Year"], medailles_chine_ete["Medals"])
+    plt.bar(medailles_chine_ete["Year"], medailles_chine_ete["Medals"], width=3)
     plt.axhline(y=moyenne, xmin=0, xmax=2018, color="red")
     plt.text(1983, 105, "Moyenne", color="red")
-    plt.text(2005, 170, "JO de Pékin", color="black")
+    plt.text(2007.375, 10, "JO de Pékin", color="white", weight="bold", rotation=90, size=18)
+    plt.xticks(medailles_chine_ete["Year"])
     plt.xlabel("Année")
     plt.ylabel("Médailles de la Chine")
     plt.show()
+
+    return medailles_chine_ete, moyenne
 
 #######################################################################################
 
 # Combien d'athlètes ont participé en moyenne par pays (question en Python) ?
 
+# Table athlètes liste
+res = []
+with open(
+        os.path.join(
+            "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
+        )
+    ) as fd:
+        file = csv.reader(fd)
+        for line in file:
+            res.append(line)
 
+# Table NOC liste
+country = []
+with open(
+        os.path.join(
+            "donnees_jeux_olympiques", "donnees_jeux_olympiques", "noc_regions.csv"
+        )
+    ) as fd:
+        file = csv.reader(fd)
+        for line in file:
+            country.append(line)
 
 
 def annees_participation(noc):
@@ -121,29 +155,6 @@ def moyenne_participants(noc):
     -------
     float
     """
-        
-    # Table athlètes liste
-    res = []
-    with open(
-            os.path.join(
-                "donnees_jeux_olympiques", "donnees_jeux_olympiques", "athlete_events.csv"
-            )
-        ) as fd:
-            file = csv.reader(fd)
-            for line in file:
-                res.append(line)
-
-    # Table NOC liste
-    country = []
-    with open(
-            os.path.join(
-                "donnees_jeux_olympiques", "donnees_jeux_olympiques", "noc_regions.csv"
-            )
-        ) as fd:
-            file = csv.reader(fd)
-            for line in file:
-                country.append(line)
-
     nb_annees, liste_jeux = annees_participation(noc)
     total = 0
     for jeu in liste_jeux:
@@ -152,4 +163,3 @@ def moyenne_participants(noc):
         total += compte_participants
     moyenne = total / nb_annees
     return moyenne
-

@@ -65,7 +65,9 @@ def interface():
             print("\nOn espère que notre projet vous a plu !\n")
             return "fin"
         elif question == "1":
-            print("\nSi vous souhaitez avoir le nombre de médailles de Michael Phelps, tapez 1. ")
+            print(
+                "\nSi vous souhaitez avoir le nombre de médailles de Michael Phelps, tapez 1. "
+            )
             print(
                 "Si vous souhaitez connaître le nombre cumulé de médailles d'un athlète de"
                 " votre choix, tapez 2.\n"
@@ -182,7 +184,7 @@ def interface():
             )
             choix = input(
                 "\nSi vous voulez rentrer vos caractéristiques tapez 1, si vous voulez"
-                " un exemple tapez 2."
+                " un exemple tapez 2.\n"
             )
             if choix == "1":
                 poids = int(input("Tapez votre poids (en kg).\n"))

@@ -7,6 +7,7 @@ from partie_Eulalie import parite_disc_hommes_femmes
 from partie_Eulalie import disciplines_disp
 from partie_Eulalie import classement_competiteurs
 from partie_apprentissage import Question_apprentissage
+from fonctions_Julie import prop_athletes_femmes
 
 warnings.filterwarnings("ignore")
 
@@ -128,7 +129,7 @@ def interface():
         elif question == "5":
             print(
                 "Vous pouvez voir les nombres d'épreuves féminines et totales dans le"
-                " tableau ci-dessous, n'oubliez pas de femer l'onglet du graphique"
+                " tableau ci-dessous, n'oubliez pas de fermer l'onglet du graphique"
                 " qui s'affiche"
             )
             print(parite_disc_hommes_femmes())
@@ -156,6 +157,8 @@ def interface():
                 "Si vous souhaitez voir l'intégralité des disciplines, allez voir les"
                 " tableaux 'anciennes_dis_hiv.csv' et 'anciennes_dis_ete.csv'"
             )
+        elif question == "8":
+            print(prop_athletes_femmes())
         elif question == "11":
             print(
                 "\nA l'aide d'un algorithme des k plus proches voisins et en utilisant"

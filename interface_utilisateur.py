@@ -58,11 +58,11 @@ def questionnaire():
 
 
 def interface():
-    print("\nBienvenue sur notre projet traitement de donnée \n")
+    print("\nBienvenue sur notre projet traitement de données ! \n")
     while True:
         question = questionnaire()
         if question == "0":
-            print("\nJ'espère que notre projet vous a plu !\n")
+            print("\nOn espère que notre projet vous a plu !\n")
             return "fin"
         elif question == "1":
             print("\nSi vous souhaitez avoir le nombre de médaille de Phelps, tapez 1 ")

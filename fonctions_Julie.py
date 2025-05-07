@@ -300,6 +300,7 @@ def moyenne_participants(noc):
         # print(f"{jeu}. {compte_participants}")
         total += compte_participants
     moyenne = total / nb_annees
+    moyenne_bis = int(moyenne)
 
     return f"""\nLe pays correspondant au NOC {noc} a envoyé des délégations
-     de {moyenne} athlète(s) en moyenne."""
+     de {moyenne_bis} athlète(s) en moyenne."""

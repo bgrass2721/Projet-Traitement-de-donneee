@@ -66,11 +66,12 @@ def interface():
             return "fin"
         elif question == "1":
             print(
-                "\nSi vous souhaitez avoir le nombre de médailles de Michael Phelps, tapez 1. "
+                "\nSi vous souhaitez avoir le nombre de médailles de Michael Phelps,"
+                " tapez 1. "
             )
             print(
-                "Si vous souhaitez connaître le nombre cumulé de médailles d'un athlète de"
-                " votre choix, tapez 2.\n"
+                "Si vous souhaitez connaître le nombre cumulé de médailles d'un athlète"
+                " de votre choix, tapez 2.\n"
             )
             choix = input()
             if choix == "1":

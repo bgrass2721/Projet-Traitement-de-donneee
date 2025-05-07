@@ -283,3 +283,5 @@ def moyenne_participants(noc):
     moyenne = total / nb_annees
 
     return f"\nLe pays correspondant au NOC {noc} a envoyé des délégations de {moyenne} athlète(s) en moyenne."
+
+

@@ -16,38 +16,38 @@ warnings.filterwarnings("ignore")
 
 def questionnaire():
     print("Voici nos différentes questions : \n")
-    print("1: Combien de médailles Michael Phelps a-t-il gagné dans sa carrière?")
+    print("1: Combien de médailles Michael Phelps a-t-il gagnées dans sa carrière ?")
     print(
         "2: Quelles sont les caractéristiques (poids, taille, âge) qui remportent le"
-        " plus de médailles?"
+        " plus de médailles ?"
     )
-    print("3: Quel est le classement des pays aux JO toutes années confondues?")
+    print("3: Quel est le classement des pays aux JO toutes années confondues ?")
     print(
-        "4: Quelle peuvent être une borne inférieure et une borne supérieure du nombre"
+        "4: Quelles peuvent être une borne inférieure et une borne supérieure du nombre"
         " de médailles gagnées par pays pour les JO 2016?"
     )
     print(
         "5: Le nombre de disciplines accessibles aux hommes et aux femmes est-il"
-        " équivalent? Les JO sont-ils devenus équitables? Si oui, depuis quand?"
+        " équivalent? Les JO sont-ils devenus équitables ? Si oui, depuis quand ?"
     )
     print("6: Quel est le classement des athlètes toutes années confondues?")
     print(
-        "7: Des disciplines pratiquées à des JO précédents ont-elles disparu? Si oui,"
-        " lesquelles?"
+        "7: Des disciplines pratiquées à des JO précédents ont-elles disparu ? Si oui,"
+        " lesquelles ?"
     )
     print(
         "8: Quelle proportion des participants les femmes représentent-elles aux JO"
-        " chaque année?"
+        " chaque année ?"
     )
     print(
         "9: La Chine a-t-elle eu de meilleures performances durant les JO de Pékin en"
-        " 2008 (par rapport à la moyenne de ses performances)? Est-ce le cas pour les"
-        " jeux qui les ont précédés et suivis?"
+        " 2008 (par rapport à la moyenne de ses performances) ? Est-ce le cas pour les"
+        " jeux qui les ont précédés et suivis ?"
     )
-    print("10: Combien de médailles les pays ont-ils gagné en moyenne depuis 1896?")
+    print("10: Combien de médailles les pays ont-ils gagné en moyenne depuis 1896 ?")
     print(
         "11: Quelles disciplines vous correspondent le mieux en se basant sur les"
-        " profils d'athlètes similaire ?"
+        " profils d'athlètes similaires ?"
     )
 
     question = input(

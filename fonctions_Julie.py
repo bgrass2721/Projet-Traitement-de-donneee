@@ -18,11 +18,36 @@ country_df = pd.read_csv(
 #######################################################################################
 
 def prop_athletes_femmes():
+    """Renvoie la proportion de femme associée à chaque édition des JO et affiche le
+    barplot correspondant.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    DataFrame
+    """
+    year = []
+    for i in range(1896, 2017, 4):
+        year.append(i)
     # Argument vide ou mettre la table comme argument ?
     athlete_femme = athlete[athlete["Sex"] == "F"]
     nb_femme_an = athlete_femme.groupby("Year")["Name"].value_counts().groupby("Year").sum()
     nb_athlete_an = athlete.groupby("Year")["Name"].value_counts().groupby("Year").sum()
     proportion_femme_an = nb_femme_an.div(nb_athlete_an)
+    proportion_femme_an = proportion_femme_an.reset_index(name="Proportion de femmes")
+
+    plt.bar(proportion_femme_an["Year"], proportion_femme_an["Proportion de femmes"], width=1.5)
+    plt.grid(which="both", axis="y")
+    plt.xticks(year, rotation=90)
+    plt.yticks([0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5])
+    plt.xlabel("Année")
+    plt.ylabel("Proportion de femmes")
+    plt.title("Proportion de femmes par an parmi les athlètes olympiques")
+    plt.show()
+
     return proportion_femme_an
 
 #######################################################################################
@@ -42,6 +67,10 @@ def perf_chine():
     DataFrame
     float
     """
+    med = []
+    for i in range(0, 191, 20):
+        med.append(i)
+    
     athlete_chine = athlete[athlete["NOC"] == "CHN"]
     athlete_chine_ete = athlete_chine[athlete_chine["Season"] == "Summer"]
 
@@ -50,19 +79,21 @@ def perf_chine():
 
     medailles_chine_ete = medailles_chine_ete.reset_index(name='Medals')
 
-    print("Médailles de la Chine : ", medailles_chine_ete)
-    print("Moyenne des médailles de la Chine : ", moyenne)
-
     plt.bar(medailles_chine_ete["Year"], medailles_chine_ete["Medals"], width=3)
+    plt.grid(which="both", axis="y")
     plt.axhline(y=moyenne, xmin=0, xmax=2018, color="red")
-    plt.text(1983, 105, "Moyenne", color="red")
-    plt.text(2007.375, 10, "JO de Pékin", color="white", weight="bold", rotation=90, size=18)
+    plt.text(1981.25, 104, "Moyenne", color="red")
+    plt.text(2006.125, -20, "(Pékin)")
     plt.xticks(medailles_chine_ete["Year"])
+    plt.yticks(med)
     plt.xlabel("Année")
     plt.ylabel("Médailles de la Chine")
+    plt.title("Performance de la Chine aux Jeux Olympiques")
     plt.show()
 
     return medailles_chine_ete, moyenne
+
+perf_chine()
 
 #######################################################################################
 

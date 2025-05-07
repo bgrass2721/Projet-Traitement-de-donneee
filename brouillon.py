@@ -66,8 +66,12 @@ def moyenne_participants(noc):
     total = 0
     for jeu in liste_jeux:
         compte_participants = participants_pays(noc, jeu)
-        print(f"{jeu}. {compte_participants}")
+        # print(f"{jeu}. {compte_participants}")
         total += compte_participants
     moyenne = total / nb_annees
     return moyenne
 
+print(moyenne_participants("FRA"))
+print(moyenne_participants("USA"))
+print(moyenne_participants("GBR"))
+print(moyenne_participants("CHN"))

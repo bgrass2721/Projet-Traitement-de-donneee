@@ -21,8 +21,8 @@ def perf_chine():
 
     medailles_chine_ete = medailles_chine_ete.reset_index(name='Medals')
 
-    print("Médailles de la Chine : ", type(medailles_chine_ete))
-    print("Moyenne des médailles de la Chine : ", type(moyenne))
+    print("Médailles de la Chine : ", medailles_chine_ete)
+    print("Moyenne des médailles de la Chine : ", moyenne)
 
     plt.bar(medailles_chine_ete["Year"], medailles_chine_ete["Medals"], width=3)
     plt.axhline(y=moyenne, xmin=0, xmax=2018, color="red")

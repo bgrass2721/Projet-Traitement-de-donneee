@@ -4,7 +4,6 @@ import os
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 
 # python pur
@@ -55,7 +54,6 @@ def Question_2():
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
     )
-    noc = pd.read_csv("donnees_jeux_olympiques/donnees_jeux_olympiques/noc_regions.csv")
 
     athlete_medaille = athlete[athlete["Medal"].isin(["Bronze", "Gold", "Silver"])]
 
@@ -159,4 +157,4 @@ def Question_3(i):
     return affiche
 
 
-print(Question_3(10))
+# print(Question_3(10))

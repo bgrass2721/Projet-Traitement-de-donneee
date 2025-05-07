@@ -9,6 +9,14 @@ import matplotlib.pyplot as plt
 # python pur
 # "Michael Fred Phelps, II"
 def Question_1(nom_athlete):
+    """Renvoie le nombre de médaille d'un certain nom
+
+    parameters: nom_athlete
+    str
+
+    Returns:
+    nombre de médaille de ce nom: int
+    """
     if not isinstance(nom_athlete, str):
         raise TypeError("Le nom de l'athlete doit être une chaîne de caractères")
     res = []
@@ -50,6 +58,14 @@ def Question_1(nom_athlete):
 
 
 def Question_2():
+    """Renvoie les modes des caractéristiques
+
+    parameters: i
+    None
+
+    Returns:
+    str
+    """
 
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
@@ -94,6 +110,15 @@ def Question_2():
 # classement = pd.DataFrame({"NOC": noc["NOC"], "Score": 0})
 # print(classement)
 def Question_3(i):
+    """Renvoie le classement des i pays avec le plus de médaille et affiche leur
+    classement
+
+    parameters: i
+    int
+
+    Returns:
+    dataframe: classement des pays
+    """
     athlete = pd.read_csv(
         "donnees_jeux_olympiques/donnees_jeux_olympiques/athlete_events.csv"
     )

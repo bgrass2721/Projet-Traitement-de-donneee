@@ -44,7 +44,9 @@ def questionnaire():
         " 2008 (par rapport à la moyenne de ses performances) ? Est-ce le cas pour les"
         " jeux qui les ont précédés et suivis ?"
     )
-    print("10: Combien de médailles les pays ont-ils gagné en moyenne depuis 1896 ?")
+    print(
+        "10: Combien de participants les délégations de chaque nation comptent-elles en moyenne ?"
+    )
     print(
         "11: Quelles disciplines vous correspondent le mieux en se basant sur les"
         " profils d'athlètes similaires ?"
